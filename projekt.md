@@ -17,12 +17,12 @@ odpovìdí bude jedno písmeno:
 - `B` - Braunovo zobrazení 
 - `M` - Mercatorovo zobrazení 
 - `E` - Behrmannovo zobrazení - Lambertovo zobrazení pro seènou rovnobìžku (u0) 30°
-.........- Zobrazovací rovnice: *x = R.v.cos(u0)*, *y = r.(1+cos(u0)).tg(u/2)*
+...- Zobrazovací rovnice: *x = R.v.cos(u0)*, *y = r.(1+cos(u0)).tg(u/2)*
 
 Následnì je uživatel vyzván k zadání celoèíselného mìøítkového èísla a polomìru Zemì 
 v km, pokud uživatel zadá `0`, je použita výchozí hodnota 6371,11 km. Po výpisu 
 souøadnic se program bude dotázovat na zemìpisnou šíøku a délku bodu, dokud uživatel 
-nezadá (0,0). V takovém pøípadì program skonèí. Pokud uživatel zadá nekorektní 
+nezadá (`0`,`0`). V takovém pøípadì program skonèí. Pokud uživatel zadá nekorektní 
 vstup, je uživatel pouèen a vyzván k opakovánému zadání.
 
 ### Výstup
@@ -36,41 +36,39 @@ od osy y a následnì `Poledniky:` a vzdálenost bodu od osy x.
 
 ### Funkce
 
-####`readChar` 
+`readChar` 
 - Vstup jednoho znaku z klávesnice.
-
-####`readInt` 
+`readInt` 
 - Vstup celoèíselné hodnoty z klávesnice.
-
-####`readDouble` 
+`readDouble` 
 - Vstup desetinného èísla z klávesnice.
 
-####`prepinac`
+`prepinac`
 - Spouští jednotlivé funkce zobrazení dle zadaného kódu zobrazení.
 - Je založena na podmínkové konstrukci `switch`.
 - Vstupem jsou parametry zobrazení (zemìpisné šíøky a délky, mìøítkové èíslo,
 ...polomìr Zemì) a znak kódující zobrazení.
 - Funkce nevrací ani nevypisuje.
 
-####`lambert`
+`lambert`
 - Pøepoèítá zemìpisné souøadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, mìøítkového èísla a polomìru Zemì. Výsledné souøadnice vypisuje do 
 ...øádku. Souøadnice pøesahující délku 100 cm jsou nahrazeny pomlènou.
 - Vstup: zemìpisné šíøky a délky, mìøítkové èíslo, polomìr Zemì
 
-####`marin`
+`marin`
 - Pøepoèítá zemìpisné souøadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, mìøítkového èísla a polomìru Zemì. Výsledné souøadnice vypisuje do 
 ...øádku. Souøadnice pøesahující délku 100 cm jsou nahrazeny pomlènou.
 - Vstup: zemìpisné šíøky a délky, mìøítkové èíslo, polomìr Zemì
 
-####`braun`
+`braun`
 - Pøepoèítá zemìpisné souøadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, mìøítkového èísla a polomìru Zemì. Výsledné souøadnice vypisuje do 
 ...øádku. Souøadnice pøesahující délku 100 cm jsou nahrazeny pomlènou.
 - Vstup: zemìpisné šíøky a délky, mìøítkové èíslo, polomìr Zemì
 
-####`mercator`
+`mercator`
 - Pøepoèítá zemìpisné souøadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, mìøítkového èísla a polomìru Zemì. Výsledné souøadnice vypisuje do 
 ...øádku. Souøadnice pøesahující délku 100 cm jsou nahrazeny pomlènou. Zobrazení 
@@ -78,7 +76,7 @@ od osy y a následnì `Poledniky:` a vzdálenost bodu od osy x.
 ..."pol nelze zobrazit"
 - Vstup: zemìpisné šíøky a délky, mìøítkové èíslo, polomìr Zemì
 
-####`behrmann`
+`behrmann`
 - Pøepoèítá zemìpisné souøadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, mìøítkového èísla a polomìru Zemì. Výsledné souøadnice vypisuje do 
 ...øádku. Souøadnice pøesahující délku 100 cm jsou nahrazeny pomlènou.
