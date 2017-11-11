@@ -2,7 +2,7 @@
 
 Předmět: **Úvod do programování**, Autor: **Bc. Jan Čermák**, Obor: **1. NKARTGD**, Rok: **2017**
 
-## Popis
+### Popis
 Program automatizuje výpočet souřadnic válcových zobrazení. Je užitečný zejména při 
 konstrukci souřadnicové sítě. Pro jedno z kódovaných válcových zobrazení, dle zadaného 
 měřítka a poloměru Země vypíše vzdálenost rovnoběžek na svislé ose a poledníků na 
@@ -17,7 +17,7 @@ odpovědí bude jedno písmeno:
 3. `B` - Braunovo zobrazení 
 4. `M` - Mercatorovo zobrazení 
 5. `E` - Behrmannovo zobrazení - Lambertovo zobrazení pro sečnou rovnoběžku (u0) 30°, 
-zobrazovací rovnice: *x = R.v.cos(u0)*, *y = r.(1+cos(u0)).tg(u/2)*
+| | zobrazovací rovnice  | *x = R.v.cos(u0)* | *y = r.(1+cos(u0)).tg(u/2)* |
 
 Následně je uživatel vyzván k zadání celočíselného měřítkového čísla a poloměru Země 
 v km, pokud uživatel zadá `0`, je použita výchozí hodnota 6371,11 km. Po výpisu 
