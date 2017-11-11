@@ -16,7 +16,7 @@ odpovědí bude jedno písmeno:
 - `A` - Marinovo zobrazení 
 - `B` - Braunovo zobrazení 
 - `M` - Mercatorovo zobrazení 
-- `E` - Behrmannovo zobrazení - Lambertovo zobrazení pro sečnou rovnoběžku (u0) 30°
+- `E` - Behrmannovo zobrazení - Lambertovo zobrazení pro sečnou rovnoběžku (u0) 30 stupňů
 ... Zobrazovací rovnice: *x = R.v.cos(u0)*, *y = r.(1+cos(u0)).tg(u/2)*
 
 Následně je uživatel vyzván k zadání celočíselného měřítkového čísla a poloměru Země 
