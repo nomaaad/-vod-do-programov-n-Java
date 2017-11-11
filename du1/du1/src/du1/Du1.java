@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**
- * Zobrazeni
+ * Valcova zobrazeni
  * @author nomad
  * @author jethro
  */
@@ -22,13 +22,15 @@ public class Du1 {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        // Inicializce promenych, vstup hodnot z klavesnice a jejich osetreni nekonecnymi cykly
+        // Inicializce promennych
         char proj; // kod zobrazeni
         int scale; // meritkove cislo
         double ref; // polomer Zeme [km]
         double R; // polomer Zeme [cm]
         double []sy = new double[1]; // zemepisna sirka bodu
         double []sx = new double[1]; // zemepisna delka bodu
+        
+        // Vstup parametru z klavesnice a jejich osetreni nekonecnymi cykly
         while (true){
             System.out.print("Zadejte zobrazeni: ");
             proj = readChar();
@@ -109,14 +111,13 @@ public class Du1 {
     }
     public static void prepinac(double []lat, double []lon, int scale, double R, char proj){
     /**
-     * Funkce volajici jednotlive funkce zobrazeni dle zadaneho kodu zobrazeni.
+     * Spousti jednotlive funkce zobrazeni dle zadaneho kodu zobrazeni.
      * 
      * @param   lat     pole zemepisnych sirek ve stupnich
      * @param   lon     pole zemepisnych delek ve stupnich
      * @param   scale   celociselne meritkove cislo
-     * @param   R       desetine cislo polomeru Zeme
+     * @param   R       desetinne cislo polomeru Zeme
      * @param   proj    znak kodujici zvolene zobrazeni
-     * @return  void
      */
         switch (proj) {
             case 'L':
@@ -139,14 +140,15 @@ public class Du1 {
     public static void lambert(double []lat, double []lon, int scale, double R){
     /** 
      * Lambertovo zobrazeni.
-     * Funkce vypisujici souradnice pro Lambertovo zobrazeni 
-     * dle zadaneho meritkoveho cisla a polomeru Zeme.
-     * Souradnice preshujici delku 100 cm jsou nahrazeny pomlckou.
+     * Prepocita zemepisne souradnice do rovinnych dle zobrazovacich rovnic
+     * Lambertova zobrazeni, meritkoveho cisla a polomeru Zeme. 
+     * Vysledne souradnice vypisuje do radku.
+     * Souradnice presahujici delku 100 cm jsou nahrazeny pomlckou.
      * 
      * @param   lat     pole zemepisnych sirek
      * @param   lon     pole zemepisnych delek
      * @param   scale   celociselne meritkove cislo
-     * @param   R       desetine cislo polomeru Zeme
+     * @param   R       desetinne cislo polomeru Zeme
      */
         // Vypocet a vypis rovnobezek
         double []y = new double[lat.length];
@@ -176,14 +178,15 @@ public class Du1 {
     public static void marin(double []lat, double []lon, int scale, double R){
     /** 
      * Marinovo zobrazeni.
-     * Funkce vypisujici souradnice pro Marinovo zobrazeni
-     * dle zadaneho meritkoveho cisla a polomeru Zeme.
-     * Souradnice preshujici delku 100 cm jsou nahrazeny pomlckou.
+     * Prepocita zemepisne souradnice do rovinnych dle zobrazovacich rovnic
+     * Marinova zobrazeni, meritkoveho cisla a polomeru Zeme. 
+     * Vysledne souradnice vypisuje do radku.
+     * Souradnice presahujici delku 100 cm jsou nahrazeny pomlckou.
      * 
      * @param   lat     pole zemepisnych sirek
      * @param   lon     pole zemepisnych delek
      * @param   scale   celociselne meritkove cislo
-     * @param   R       desetine cislo polomeru Zeme
+     * @param   R       desetinne cislo polomeru Zeme
      */
         // Vypocet a vypis rovnobezek
         double []y = new double[lat.length];
@@ -211,16 +214,17 @@ public class Du1 {
         }   
     }
     public static void braun(double []lat, double []lon, int scale, double R){
-    /**
+    /** 
      * Braunovo zobrazeni.
-     * Funkce vypisujici souradnice pro Braunovo zobrazeni
-     * dle zadaneho meritkoveho cisla a polomeru Zeme.
+     * Prepocita zemepisne souradnice do rovinnych dle zobrazovacich rovnic
+     * Braunova zobrazeni, meritkoveho cisla a polomeru Zeme. 
+     * Vysledne souradnice vypisuje do radku.
      * Souradnice preshujici delku 100 cm jsou nahrazeny pomlckou.
      * 
      * @param   lat     pole zemepisnych sirek
      * @param   lon     pole zemepisnych delek
      * @param   scale   celociselne meritkove cislo
-     * @param   R       desetine cislo polomeru Zeme
+     * @param   R       desetinne cislo polomeru Zeme
      */
         // Vypocet a vypis rovnobezek
         double []y = new double[lat.length];
@@ -248,10 +252,11 @@ public class Du1 {
         }   
     }
     public static void mercator(double []lat, double []lon, int scale, double R){
-    /**
+    /** 
      * Mercatorovo zobrazeni.
-     * Funkce vypisujici souradnice pro Mercatorovo zobrazeni 
-     * dle zadaneho meritkoveho cisla a polomeru Zeme.
+     * Prepocita zemepisne souradnice do rovinnych dle zobrazovacich rovnic
+     * Mercatorova zobrazeni, meritkoveho cisla a polomeru Zeme. 
+     * Vysledne souradnice vypisuje do radku.
      * Souradnice preshujici delku 100 cm jsou nahrazeny pomlckou.
      * Zobrazeni neumoznuje zobrazit poly, pri pokusu o vypocet souradnice polu 
      * je vypsano: "pol nelze zobrazit"
@@ -259,7 +264,7 @@ public class Du1 {
      * @param   lat     pole zemepisnych sirek
      * @param   lon     pole zemepisnych delek
      * @param   scale   celociselne meritkove cislo
-     * @param   R       desetine cislo polomeru Zeme
+     * @param   R       desetinne cislo polomeru Zeme
      */        
         // Vypocet a vypis rovnobezek
         double []y = new double[lat.length];
@@ -293,14 +298,15 @@ public class Du1 {
     public static void behrmann(double []lat, double []lon, int scale, double R){
     /** 
      * Behrmannovo zobrazeni.
-     * Funkce vypisujici souradnice pro Behrmannovo zobrazeni
-     * dle zadaneho meritkoveho cisla a polomeru Zeme.
+     * Prepocita zemepisne souradnice do rovinnych dle zobrazovacich rovnic
+     * Behrmannova zobrazeni, meritkoveho cisla a polomeru Zeme. 
+     * Vysledne souradnice vypisuje do radku.
      * Souradnice preshujici delku 100 cm jsou nahrazeny pomlckou.
      * 
      * @param   lat     pole zemepisnych sirek
      * @param   lon     pole zemepisnych delek
      * @param   scale   celociselne meritkove cislo
-     * @param   R       desetine cislo polomeru Zeme
+     * @param   R       desetinne cislo polomeru Zeme
      */
         // Vypocet a vypis rovnobezek
         double []y = new double[lat.length];
