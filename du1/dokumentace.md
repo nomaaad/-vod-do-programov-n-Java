@@ -12,12 +12,12 @@ zvolených v předchozích krocích.
 ### Vstup
 Program je interaktivní. Nejprve se zeptá uživatele na použité zobrazení,
 odpovědí bude jedno písmeno: 
-- `L` - Lambertovo zobrazení
-- `A` - Marinovo zobrazení 
-- `B` - Braunovo zobrazení 
-- `M` - Mercatorovo zobrazení 
-- `E` - Behrmannovo zobrazení - Lambertovo zobrazení pro sečnou rovnoběžku (u0) 30°
-..*Zobrazovací rovnice: *x = R.v.cos(u0)*, *y = r.(1+cos(u0)).tg(u/2)*
+1. `L` - Lambertovo zobrazení
+2. `A` - Marinovo zobrazení 
+3. `B` - Braunovo zobrazení 
+4. `M` - Mercatorovo zobrazení 
+5. `E` - Behrmannovo zobrazení - Lambertovo zobrazení pro sečnou rovnoběžku (u0) 30°
+-Zobrazovací rovnice: *x = R.v.cos(u0)*, *y = r.(1+cos(u0)).tg(u/2)*
 
 Následně je uživatel vyzván k zadání celočíselného měřítkového čísla a poloměru Země 
 v km, pokud uživatel zadá `0`, je použita výchozí hodnota 6371,11 km. Po výpisu 
