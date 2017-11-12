@@ -29,7 +29,11 @@ public class Du1 {
         double R; // polomer Zeme [cm]
         double []sy = new double[1]; // zemepisna sirka bodu
         double []sx = new double[1]; // zemepisna delka bodu
-        
+        int lat_step = 10; // krok rovnobezek
+        int lon_step = 10; // krok poledniku
+        double []lat = new double[(90/lat_step)*2+1]; // vybrane rovnobezky site
+        double []lon = new double[(180/lat_step)*2+1]; // vybrane poledniky site
+                
         // Vstup parametru z klavesnice a jejich osetreni nekonecnymi cykly
         while (true){
             System.out.print("Zadejte zobrazeni: ");
@@ -59,10 +63,13 @@ public class Du1 {
             }
             System.out.println("Polomer Zeme nesmi byt zaporny. V pripade zadani nuly bude pouzita vychozi hodnota 6371,11 km.");
         }
-        // Pole rovnobezek a poledniku s krokem 10 stupnu
-        double []lat = {-90,-80,-70,-60,-50,-40,-30,-20,-10,0,10,20,30,40,50,60,70,80,90};
-        double []lon = {-180,-170,-160,-150,-140,-130,-120,-110,-100,-90,-80,-70,-60,-50,-40,-30,-20,-10,
-                        0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180};
+        // Vytvoreni pole rovnobezek a poledniku s danym krokem stupnu
+        for(int i=0; i < lat.length; i++){
+            lat[i] = -90+i*lat_step;
+        }
+        for(int i=0; i < lon.length; i++){
+            lon[i] = -180+i*lon_step;
+        }
                 
         // Volani zvolene funkce zobrazeni
         prepinac(lat, lon, scale, R, proj);
