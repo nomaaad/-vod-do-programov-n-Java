@@ -38,8 +38,10 @@ od osy y a následně `Poledniky:` a vzdálenost bodu od osy x.
 
 `readChar` 
 - Vstup jednoho znaku z klávesnice.
+
 `readInt` 
 - Vstup celočíselné hodnoty z klávesnice.
+
 `readDouble` 
 - Vstup desetinného čísla z klávesnice.
 
