@@ -55,7 +55,7 @@ od osy y a následně `Poledniky:` a vzdálenost bodu od osy x.
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
 ...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
-- Zobrazovací rovnice: *x = R.v*, *y = R.sun(u)*
+- Zobrazovací rovnice: *x = R.v*, *y = R.sin(u)*
 - Vstup: pole *v*, pole *u*, celočíselné měřítko, desetinný *R* 
 
 `marin`
