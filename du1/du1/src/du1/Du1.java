@@ -63,7 +63,7 @@ public class Du1 {
             }
             System.out.println("Polomer Zeme nesmi byt zaporny. V pripade zadani nuly bude pouzita vychozi hodnota 6371,11 km.");
         }
-        // Vytvoreni pole rovnobezek a poledniku s danym krokem stupnu
+        // Vyplneni pole rovnobezek a poledniku s danym krokem stupnu
         for(int i=0; i < lat.length; i++){
             lat[i] = -90+i*lat_step;
         }
@@ -151,6 +151,7 @@ public class Du1 {
      * Lambertova zobrazeni, meritkoveho cisla a polomeru Zeme. 
      * Vysledne souradnice vypisuje do radku.
      * Souradnice presahujici delku 100 cm jsou nahrazeny pomlckou.
+     * Zobrazovaci rovnice: x = R.v, y = R.sin(u)
      * 
      * @param   lat     pole zemepisnych sirek
      * @param   lon     pole zemepisnych delek
@@ -189,6 +190,7 @@ public class Du1 {
      * Marinova zobrazeni, meritkoveho cisla a polomeru Zeme. 
      * Vysledne souradnice vypisuje do radku.
      * Souradnice presahujici delku 100 cm jsou nahrazeny pomlckou.
+     * Zobrazovaci rovnice: x = R.v, y = R.u
      * 
      * @param   lat     pole zemepisnych sirek
      * @param   lon     pole zemepisnych delek
@@ -227,6 +229,7 @@ public class Du1 {
      * Braunova zobrazeni, meritkoveho cisla a polomeru Zeme. 
      * Vysledne souradnice vypisuje do radku.
      * Souradnice preshujici delku 100 cm jsou nahrazeny pomlckou.
+     * Zobrazovaci rovnice: x = R.v, y = 2.R.tg(u/2)
      * 
      * @param   lat     pole zemepisnych sirek
      * @param   lon     pole zemepisnych delek
@@ -267,6 +270,7 @@ public class Du1 {
      * Souradnice preshujici delku 100 cm jsou nahrazeny pomlckou.
      * Zobrazeni neumoznuje zobrazit poly, pri pokusu o vypocet souradnice polu 
      * je vypsano: "pol nelze zobrazit"
+     * Zobrazovaci rovnice: x = R.v, y = R.ln(cotg(d/2))
      * 
      * @param   lat     pole zemepisnych sirek
      * @param   lon     pole zemepisnych delek
@@ -309,6 +313,7 @@ public class Du1 {
      * Behrmannova zobrazeni, meritkoveho cisla a polomeru Zeme. 
      * Vysledne souradnice vypisuje do radku.
      * Souradnice preshujici delku 100 cm jsou nahrazeny pomlckou.
+     * Zobrazovaci rovnice: x = R.v.cos(u0), y = R.sin(u).1/cos(u0)
      * 
      * @param   lat     pole zemepisnych sirek
      * @param   lon     pole zemepisnych delek
