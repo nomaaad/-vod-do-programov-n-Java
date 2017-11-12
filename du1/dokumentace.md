@@ -4,10 +4,10 @@ Předmět: **Úvod do programování**, Autor: **Bc. Jan Čermák**, Obor: **1. 
 
 ### Popis
 Program automatizuje výpočet souřadnic válcových zobrazení. Je užitečný zejména při 
-konstrukci souřadnicové sítě. Pro jedno z kódovaných válcových zobrazení, dle zadaného 
-měřítka a poloměru Země vypíše vzdálenost rovnoběžek na svislé ose a poledníků na 
-vodorovné ose. Následně je možný přepočet zeměpisných souřadnic bodu dle parametrů 
-zvolených v předchozích krocích.
+konstrukci souřadnicové sítě. Pro jedno z kódovaných válcových zobrazení vypíše 
+vzdálenost rovnoběžek na svislé ose a poledníků na vodorovné ose. Uživatel může
+zvolit vlastní měřítko a poloměr Země. Následně je možný přepočet zeměpisných 
+souřadnic bodu dle parametrů zvolených v předchozích krocích.
 
 ### Vstup
 Program je interaktivní. Nejprve se zeptá uživatele na použité zobrazení,
@@ -21,15 +21,15 @@ odpovědí bude jedno písmeno:
 
 Následně je uživatel vyzván k zadání celočíselného měřítkového čísla a poloměru Země 
 v km, pokud uživatel zadá `0`, je použita výchozí hodnota 6371,11 km. Po výpisu 
-souřadnic se program bude dotázovat na zeměpisnou šířku a délku bodu, dokud uživatel 
+souřadnic se program bude dotazovat na zeměpisnou šířku a délku bodu, dokud uživatel 
 nezadá (`0`,`0`). V takovém případě program skončí. Pokud uživatel zadá nekorektní 
-vstup, je uživatel poučen a vyzván k opakovánému zadání.
+vstup, je uživatel poučen a vyzván k opakovanému zadání.
 
 ### Výstup
 Po zadání první řady parametrů program vypíše `Rovnobezky:` a následně seznam 
 vzdáleností na svislé ose od -90 po 90 stupňů. Poté vypíše `Poledniky:` a seznam 
 vzdáleností na vodorovné ose od -180 po 180 stupňů. Krok poledníků a rovnoběžek je 
-10 stupňů. Všechny vypisované vzdálenosti se vypisují v centimetrech s přesností na 
+10 stupňů. Veškeré vypisované vzdálenosti se vypisují v centimetrech s přesností na 
 milimetry. Vzdálenosti, které překročí 1 metr jsou nahrazeny pomlčkou.
 Po zadání zeměpisné šířky a délky bodu je vypsáno `Rovnobezky:` a vzdálenost bodu 
 od osy y a následně `Poledniky:` a vzdálenost bodu od osy x.
@@ -53,25 +53,25 @@ od osy y a následně `Poledniky:` a vzdálenost bodu od osy x.
 `lambert`
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
-...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčnou.
+...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
 - Vstup: zeměpisné šířky a délky, měřítkové číslo, poloměr Země
 
 `marin`
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
-...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčnou.
+...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
 - Vstup: zeměpisné šířky a délky, měřítkové číslo, poloměr Země
 
 `braun`
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
-...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčnou.
+...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
 - Vstup: zeměpisné šířky a délky, měřítkové číslo, poloměr Země
 
 `mercator`
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
-...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčnou. Zobrazení 
+...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou. Zobrazení 
 ...neumožňuje zobrazit póly, při pokusu o výpočet souradnice polu je vypsáno: 
 ..."pol nelze zobrazit"
 - Vstup: zeměpisné šířky a délky, měřítkové číslo, poloměr Země
@@ -79,5 +79,5 @@ od osy y a následně `Poledniky:` a vzdálenost bodu od osy x.
 `behrmann`
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
-...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčnou.
+...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
 - Vstup: zeměpisné šířky a délky, měřítkové číslo, poloměr Země
