@@ -16,8 +16,7 @@ odpovědí bude jedno písmeno:
 2. `A` - Marinovo zobrazení 
 3. `B` - Braunovo zobrazení 
 4. `M` - Mercatorovo zobrazení 
-5. `E` - Behrmannovo zobrazení - zobrazovací rovnice: *x = R.v.cos(u0)*, 
-*y = r.(1+cos(u0)).tg(u/2)*, Lambertovo zobrazení pro sečnou rovnoběžku u0 = 30°
+5. `E` - Behrmannovo zobrazení
 
 Následně je uživatel vyzván k zadání celočíselného měřítkového čísla a poloměru Země 
 v km, pokud uživatel zadá `0`, je použita výchozí hodnota 6371,11 km. Po výpisu 
@@ -56,19 +55,22 @@ od osy y a následně `Poledniky:` a vzdálenost bodu od osy x.
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
 ...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
-- Vstup: zeměpisné šířky a délky, měřítkové číslo, poloměr Země
+- Zobrazovací rovnice: *x = R.v, *y = R.sun(u)*
+- Vstup: pole *v*, pole *u*, celočíselné měřítko, desetinný *R* 
 
 `marin`
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
 ...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
-- Vstup: zeměpisné šířky a délky, měřítkové číslo, poloměr Země
+- Zobrazovací rovnice: *x = R.v, *y = R.u*
+- Vstup: pole *v*, pole *u*, celočíselné měřítko, desetinný *R*
 
 `braun`
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
 ...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
-- Vstup: zeměpisné šířky a délky, měřítkové číslo, poloměr Země
+- Zobrazovací rovnice: *x = R.v, *y = 2.R.tg(u/2)*
+- Vstup: pole *v*, pole *u*, celočíselné měřítko, desetinný *R* 
 
 `mercator`
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
@@ -76,10 +78,15 @@ od osy y a následně `Poledniky:` a vzdálenost bodu od osy x.
 ...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou. Zobrazení 
 ...neumožňuje zobrazit póly, při pokusu o výpočet souradnice polu je vypsáno: 
 ..."pol nelze zobrazit"
-- Vstup: zeměpisné šířky a délky, měřítkové číslo, poloměr Země
+- Zobrazovací rovnice: *x = R.v, *y = R.ln(cotg(d/2))*
+- Vstup: pole *v*, pole *u*, celočíselné měřítko, desetinný *R* 
 
 `behrmann`
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
 ...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
-- Vstup: zeměpisné šířky a délky, měřítkové číslo, poloměr Země
+- Lambertovo zobrazení pro sečnou rovnoběžku u0 = 30°
+- Zobrazovací rovnice: *x = R.v.cos(u0)*, *y = R.sin(u).1/cos(u0)*
+- Vstup: pole *v*, pole *u*, celočíselné měřítko, desetinný *R* 
+
+*Zkratky: v - zeměpisná délka, u - zeměpisná šířka, d - deklinace, R - poloměr Země*
