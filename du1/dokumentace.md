@@ -55,21 +55,21 @@ od osy y a následně `Poledniky:` a vzdálenost bodu od osy x.
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
 ...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
-- Zobrazovací rovnice: *x = R.v, *y = R.sun(u)*
+- Zobrazovací rovnice: *x = R.v*, *y = R.sun(u)*
 - Vstup: pole *v*, pole *u*, celočíselné měřítko, desetinný *R* 
 
 `marin`
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
 ...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
-- Zobrazovací rovnice: *x = R.v, *y = R.u*
+- Zobrazovací rovnice: *x = R.v*, *y = R.u*
 - Vstup: pole *v*, pole *u*, celočíselné měřítko, desetinný *R*
 
 `braun`
 - Přepočítá zeměpisné souřadnice do rovinných dle zobrazovacích rovnic Lambertova
 ...zobrazení, měřítkového čísla a poloměru Země. Výsledné souřadnice vypisuje do 
 ...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou.
-- Zobrazovací rovnice: *x = R.v, *y = 2.R.tg(u/2)*
+- Zobrazovací rovnice: *x = R.v*, *y = 2.R.tg(u/2)*
 - Vstup: pole *v*, pole *u*, celočíselné měřítko, desetinný *R* 
 
 `mercator`
@@ -78,7 +78,7 @@ od osy y a následně `Poledniky:` a vzdálenost bodu od osy x.
 ...řádku. Souřadnice přesahující délku 100 cm jsou nahrazeny pomlčkou. Zobrazení 
 ...neumožňuje zobrazit póly, při pokusu o výpočet souradnice polu je vypsáno: 
 ..."pol nelze zobrazit"
-- Zobrazovací rovnice: *x = R.v, *y = R.ln(cotg(d/2))*
+- Zobrazovací rovnice: *x = R.v*, *y = R.ln(cotg(d/2))*
 - Vstup: pole *v*, pole *u*, celočíselné měřítko, desetinný *R* 
 
 `behrmann`
