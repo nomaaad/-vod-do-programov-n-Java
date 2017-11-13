@@ -32,7 +32,7 @@ public class Du1 {
         int lat_step = 10; // krok rovnobezek
         int lon_step = 10; // krok poledniku
         double []lat = new double[(90/lat_step)*2+1]; // vybrane rovnobezky site
-        double []lon = new double[(180/lat_step)*2+1]; // vybrane poledniky site
+        double []lon = new double[(180/lon_step)*2+1]; // vybrane poledniky site
                 
         // Vstup parametru z klavesnice a jejich osetreni nekonecnymi cykly
         while (true){
