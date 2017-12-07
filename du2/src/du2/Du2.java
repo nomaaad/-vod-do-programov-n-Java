@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cv10;
+package du2;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author nomad
  * @author jethro
  */
-public class Cv10 {
+public class Du2 {
 
     /**
      * @param args the command line arguments
@@ -75,7 +75,7 @@ public class Cv10 {
             }
             writer.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Cv10.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Du2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
