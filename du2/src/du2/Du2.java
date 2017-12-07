@@ -26,8 +26,8 @@ public class Du2 {
      */
     public static void main(String[] args) {
         int res = 100;
-        double []xx = new double[res];
-        double []yy = new double[res];
+        //double []xx = new double[res];
+        //double []yy = new double[res];
         //double []zz = new double[20];
         double []xd = new double[20];
         double []yd = new double[20];
@@ -77,8 +77,8 @@ public class Du2 {
 //            zz[i]=IDW1p(xd, yd, zd, xx[i], yy[i], 2);
 //            System.out.println("..."+zz[i]);
 //        }
-        xx = getGrid(xd, res);
-        yy = getGrid(yd, res);
+        double []xx = getGrid(xd, res);
+        double []yy = getGrid(yd, res);
         
 //        for (int i=0; i<zz.length; i++){
 //            zz[i]=IDW1p(xd, yd, zd, xx[i], yy[i], 2);
@@ -93,16 +93,12 @@ public class Du2 {
             writer = new PrintWriter(args[1]);
             for(int i=0; i<res; i++){
                 for(int j=0; j<res; j++){
-                    writer.print(IDW1p(xd, yd, zd, xx[i], yy[j], 2));
+                    //if 
+                    //writer.format("%f ", IDW1p(xd, yd, zd, xx[i], yy[j], 2));
+                    writer.print(Math.round(IDW1p(xd, yd, zd, xx[i], yy[j], 2)*100)/100.0+",");
                 }
+                writer.println();
                 
-                
-//                if(i%100==0){
-//                    writer.println(zz[i-1]+",");
-//                }
-//                else{    
-//                    writer.print(zz[i-1]+",");
-//                }
             }
             writer.close();
         } catch (FileNotFoundException ex) {
@@ -186,7 +182,9 @@ public class Du2 {
             if(i==0){
                 grid[0]=getMin(arr);
             }
-            grid[i]=grid[i-1]+cell;
+            else{
+                grid[i]=grid[i-1]+cell;
+            }
         }    
         return grid;
     }
