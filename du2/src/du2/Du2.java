@@ -25,9 +25,14 @@ public class Du2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        double []x = new double[20];
-        double []y = new double[20];
-        double []z = new double[20];
+        int res = 100;
+        double []xx = new double[res];
+        double []yy = new double[res];
+        //double []zz = new double[20];
+        double []xd = new double[20];
+        double []yd = new double[20];
+        double []zd = new double[20];
+        
         try {
             BufferedReader br = new BufferedReader(new FileReader(args[0]));
             String line;
@@ -45,13 +50,13 @@ public class Du2 {
                     //System.out.println(items[i]);
                     Double.parseDouble(items[i]);
                     if (i==0){
-                        x[j]=(Double.parseDouble(items[i]));
+                        xd[j]=(Double.parseDouble(items[i]));
                     }
                     if (i==1){
-                        y[j]=(Double.parseDouble(items[i]));
+                        yd[j]=(Double.parseDouble(items[i]));
                     }
                     if (i==2){
-                        z[j]=(Double.parseDouble(items[i]));
+                        zd[j]=(Double.parseDouble(items[i]));
                     }
                 }
                 j++;
@@ -64,19 +69,40 @@ public class Du2 {
             System.exit(1);
         }
         
-        //System.out.println(IDW1b(x, y, z, 200, 220, 2));
-        System.out.println(IDW1b(x, y, z, 200, 220, 2));
+//        for (int i=0; i<xd.length; i++){
+//            xx[i] = Math.random()*1000;
+//            System.out.print(xx[i]);
+//            yy[i] = Math.random()*100;
+//            System.out.print("..."+yy[i]);
+//            zz[i]=IDW1p(xd, yd, zd, xx[i], yy[i], 2);
+//            System.out.println("..."+zz[i]);
+//        }
+        xx = getGrid(xd, res);
+        yy = getGrid(yd, res);
+        
+//        for (int i=0; i<zz.length; i++){
+//            zz[i]=IDW1p(xd, yd, zd, xx[i], yy[i], 2);
+//        }
+        
+//        double []z=new double[1];
+//        z[0]=IDW1b(xd, yd, zd, 200, 220, 2);
+//        System.out.println(z[0]);
         
         PrintWriter writer;
         try {
             writer = new PrintWriter(args[1]);
-            for(int i=1; i<20; i++){
-                if(i%100==0){
-                    writer.println(z[i-1]);
+            for(int i=0; i<res; i++){
+                for(int j=0; j<res; j++){
+                    writer.print(IDW1p(xd, yd, zd, xx[i], yy[j], 2));
                 }
-                else{    
-                    writer.print(z[i-1]+",");
-                }
+                
+                
+//                if(i%100==0){
+//                    writer.println(zz[i-1]+",");
+//                }
+//                else{    
+//                    writer.print(zz[i-1]+",");
+//                }
             }
             writer.close();
         } catch (FileNotFoundException ex) {
@@ -84,7 +110,7 @@ public class Du2 {
         }
     }
     
-    public static double IDW1b(double []xd, double []yd, double []zd, double x, double y, double al){
+    public static double IDW1p(double []xd, double []yd, double []zd, double x, double y, double al){
     /** 
      * 
      * 
@@ -94,33 +120,74 @@ public class Du2 {
      * @param   R       desetinne cislo polomeru Zeme
      */        
     
-    int nd=xd.length;
-    double r;
-    double z;
-    double []lam = new double[nd];
-    double []lambda = new double[nd];
-    double []zi = new double[nd];
+        int nd=xd.length;
+        double r;
+        double z;
+        double []lam = new double[nd];
+        double []lambda = new double[nd];
+        double []zi = new double[nd];
     
-    for (int i=1; i<nd; i++){
-        r=Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2));
-        if (r==0){
-            return zd[i];
+        for (int i=1; i<nd; i++){
+            r=Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2));
+            if (r==0){
+                return zd[i];
+            }
+            else{
+                lam[i]=1/Math.pow(r,al);
+            }
         }
-        else{
-            lam[i]=1/Math.pow(r,al);
-        }
-    }
     
     //
-    double lamSum = DoubleStream.of(lam).sum();
-    for (int i=0; i<lam.length; i++){
-        lambda[i]=lam[i]/lamSum;
-    }
+        double lamSum = DoubleStream.of(lam).sum();
+        for (int i=0; i<lam.length; i++){
+            lambda[i]=lam[i]/lamSum;
+        }
     
     //
-    for (int i=0; i<lam.length; i++){
-        zi[i]=zd[i]*lambda[i];
+        for (int i=0; i<lam.length; i++){
+            zi[i]=zd[i]*lambda[i];
+        }
+        return DoubleStream.of(zi).sum();
     }
-    return DoubleStream.of(zi).sum();
-    } 
+    public static double getMax(double[] input){
+    /** 
+     * 
+     * 
+     */    
+        double max = input[0]; 
+        for(int i=1; i<input.length; i++){ 
+            if(input[i] > max){ 
+                max = input[i]; 
+            } 
+        } 
+        return max;
+    }
+    public static double getMin(double[] arr){ 
+    /** 
+     * 
+     * 
+     */    
+        double min = arr[0]; 
+        for(int i=1; i<arr.length; i++){ 
+            if(arr[i] < min){ 
+                min = arr[i]; 
+            } 
+        } 
+        return min; 
+    }
+    public static double[] getGrid(double[] arr, int res){ 
+    /** 
+     * 
+     * 
+     */ 
+        double []grid = new double[res];
+        double cell = (getMax(arr)-getMin(arr))/res;
+        for(int i=0; i<res; i++){
+            if(i==0){
+                grid[0]=getMin(arr);
+            }
+            grid[i]=grid[i-1]+cell;
+        }    
+        return grid;
+    }
 }
