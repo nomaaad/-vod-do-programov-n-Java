@@ -14,6 +14,8 @@ import java.util.Scanner;
  * Valcova zobrazeni
  * @author nomad
  * @author jethro
+ * 
+ * hodnoceni: 15/16
  */
 public class Du1 {
 
