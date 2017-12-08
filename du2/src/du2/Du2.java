@@ -26,9 +26,7 @@ public class Du2 {
      */
     public static void main(String[] args) {
         int res = 100;
-        //double []xx = new double[res];
-        //double []yy = new double[res];
-        //double []zz = new double[20];
+        double alfa = 2;
         double []xd = new double[20];
         double []yd = new double[20];
         double []zd = new double[20];
@@ -69,36 +67,17 @@ public class Du2 {
             System.exit(1);
         }
         
-//        for (int i=0; i<xd.length; i++){
-//            xx[i] = Math.random()*1000;
-//            System.out.print(xx[i]);
-//            yy[i] = Math.random()*100;
-//            System.out.print("..."+yy[i]);
-//            zz[i]=IDW1p(xd, yd, zd, xx[i], yy[i], 2);
-//            System.out.println("..."+zz[i]);
-//        }
         double []xx = getGrid(xd, res);
         double []yy = getGrid(yd, res);
-        
-//        for (int i=0; i<zz.length; i++){
-//            zz[i]=IDW1p(xd, yd, zd, xx[i], yy[i], 2);
-//        }
-        
-//        double []z=new double[1];
-//        z[0]=IDW1b(xd, yd, zd, 200, 220, 2);
-//        System.out.println(z[0]);
         
         PrintWriter writer;
         try {
             writer = new PrintWriter(args[1]);
             for(int i=0; i<res; i++){
                 for(int j=0; j<res; j++){
-                    //if 
-                    //writer.format("%f ", IDW1p(xd, yd, zd, xx[i], yy[j], 2));
-                    writer.print(Math.round(IDW1p(xd, yd, zd, xx[i], yy[j], 2)*100)/100.0+",");
+                    writer.print(Math.round(IDW1p(xd, yd, zd, xx[i], yy[j], alfa)*100)/100.0+",");
                 }
                 writer.println();
-                
             }
             writer.close();
         } catch (FileNotFoundException ex) {
@@ -118,7 +97,6 @@ public class Du2 {
     
         int nd=xd.length;
         double r;
-        double z;
         double []lam = new double[nd];
         double []lambda = new double[nd];
         double []zi = new double[nd];
