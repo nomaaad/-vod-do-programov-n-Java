@@ -39,23 +39,37 @@ public class Du2 {
         double []yd = new double[n];
         double []zd = new double[n];
         
-        for (int j=1; j<=n; j++){
-            String [] items;
-            String line = fileArr[j];
-            items = line.split(",");
-            for (int i=0; i<items.length; i++){
-                System.out.println(items[i]);
-                Double.parseDouble(items[i]);
-                if (i==0){
-                    xd[j-1]=(Double.parseDouble(items[i]));
-                }
-                if (i==1){
-                    yd[j-1]=(Double.parseDouble(items[i]));
-                }
-                if (i==2){
-                    zd[j-1]=(Double.parseDouble(items[i]));
+        try{
+            for (int j=1; j<=n; j++){
+                String [] items;
+                String line = fileArr[j];
+                items = line.split(",");
+                for (int i=0; i<items.length; i++){
+                    Double.parseDouble(items[i]);
+                    if (items.length!=3){
+                        System.err.print("False number of value(s) in line");
+                        System.exit(1);
+                    }
+                    if (i==0){
+                        xd[j-1]=(Double.parseDouble(items[i]));
+                        System.out.println("x: "+items[i]);
+                    }
+                    if (i==1){
+                        yd[j-1]=(Double.parseDouble(items[i]));
+                        System.out.println("y: "+items[i]);
+                    }
+                    if (i==2){
+                        zd[j-1]=(Double.parseDouble(items[i]));
+                        System.out.println("z: "+items[i]);
+                    }
                 }
             }
+        } catch(ArrayIndexOutOfBoundsException ex){
+            System.err.print("Missing line(s) in file");
+            System.exit(1);
+        } catch(NumberFormatException ex){
+            System.err.print("NaN in file");
+            System.exit(1);
         }
         
         double []xx = getGrid(xd, res);
@@ -164,25 +178,24 @@ public class Du2 {
      * 
      * 
      */
-    try {
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        String line;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
 
-        List<String> list = new ArrayList<>();
-        while((line = br.readLine()) != null){
-            list.add(line);
+            List<String> list = new ArrayList<>();
+            while((line = br.readLine()) != null){
+                list.add(line);
+            }
+
+            String[] stringArr = list.toArray(new String[0]);
+            return stringArr;
+        } catch (FileNotFoundException ex) {
+            System.err.format("File %s not found",file);
+            System.exit(1);
+        } catch (IOException ex) {
+            System.err.print("Error while reading a line");
+            System.exit(1);
         }
-
-        String[] stringArr = list.toArray(new String[0]);
-        return stringArr;
-    } catch (FileNotFoundException ex) {
-        System.err.format("File %s not found",file);
-        System.exit(1);
-    } catch (IOException ex) {
-        System.err.print("Error while reading a line");
-        System.exit(1);
+        return null;
     }
-    return null;
-    }
-
 }
