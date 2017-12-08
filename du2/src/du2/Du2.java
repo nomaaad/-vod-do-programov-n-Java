@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.DoubleStream;
@@ -27,44 +29,33 @@ public class Du2 {
     public static void main(String[] args) {
         int res = 100;
         double alfa = 2;
-        double []xd = new double[20];
-        double []yd = new double[20];
-        double []zd = new double[20];
         
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(args[0]));
-            String line;
-            int j=0;
-            while ((line = br.readLine())!=null){
-                String [] items;
-                items = line.split(",");
-                //if (args[0].equals("-n")){
-                //    System.out.println();
-                //}
-                //if(j==0){
-                //    continue;
-                //}
-                for (int i=0; i<items.length; i++){
-                    //System.out.println(items[i]);
-                    Double.parseDouble(items[i]);
-                    if (i==0){
-                        xd[j]=(Double.parseDouble(items[i]));
-                    }
-                    if (i==1){
-                        yd[j]=(Double.parseDouble(items[i]));
-                    }
-                    if (i==2){
-                        zd[j]=(Double.parseDouble(items[i]));
-                    }
+        String tFile = args[0];
+        String []fileArr = loadT(tFile);
+                
+        int n = Integer.parseInt(fileArr[0]);
+                
+        double []xd = new double[n];
+        double []yd = new double[n];
+        double []zd = new double[n];
+        
+        for (int j=1; j<=n; j++){
+            String [] items;
+            String line = fileArr[j];
+            items = line.split(",");
+            for (int i=0; i<items.length; i++){
+                System.out.println(items[i]);
+                Double.parseDouble(items[i]);
+                if (i==0){
+                    xd[j-1]=(Double.parseDouble(items[i]));
                 }
-                j++;
+                if (i==1){
+                    yd[j-1]=(Double.parseDouble(items[i]));
+                }
+                if (i==2){
+                    zd[j-1]=(Double.parseDouble(items[i]));
+                }
             }
-        } catch (FileNotFoundException ex) {
-            System.err.format("File %s not found",args[0]);
-            System.exit(1);
-        } catch (IOException ex) {
-            System.err.print("Error while reading a line");
-            System.exit(1);
         }
         
         double []xx = getGrid(xd, res);
@@ -89,10 +80,12 @@ public class Du2 {
     /** 
      * 
      * 
-     * @param   lat     pole zemepisnych sirek
-     * @param   lon     pole zemepisnych delek
-     * @param   scale   celociselne meritkove cislo
-     * @param   R       desetinne cislo polomeru Zeme
+     * @param   xd     
+     * @param   yd     
+     * @param   zd   
+     * @param   x
+     * @param   y
+     * @param   al
      */        
     
         int nd=xd.length;
@@ -113,12 +106,12 @@ public class Du2 {
     
     //
         double lamSum = DoubleStream.of(lam).sum();
-        for (int i=0; i<lam.length; i++){
+        for (int i=0; i<nd; i++){
             lambda[i]=lam[i]/lamSum;
         }
     
     //
-        for (int i=0; i<lam.length; i++){
+        for (int i=0; i<nd; i++){
             zi[i]=zd[i]*lambda[i];
         }
         return DoubleStream.of(zi).sum();
@@ -166,4 +159,30 @@ public class Du2 {
         }    
         return grid;
     }
+    public static String[] loadT(String file){
+    /** 
+     * 
+     * 
+     */
+    try {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line;
+
+        List<String> list = new ArrayList<>();
+        while((line = br.readLine()) != null){
+            list.add(line);
+        }
+
+        String[] stringArr = list.toArray(new String[0]);
+        return stringArr;
+    } catch (FileNotFoundException ex) {
+        System.err.format("File %s not found",file);
+        System.exit(1);
+    } catch (IOException ex) {
+        System.err.print("Error while reading a line");
+        System.exit(1);
+    }
+    return null;
+    }
+
 }
