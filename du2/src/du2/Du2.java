@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import java.util.stream.DoubleStream;
 
 /**
- * IDW
+ * GRID INTERPOLATION USING IDW
  * @author nomad
  * @author jethro
  */
@@ -27,9 +27,10 @@ public class Du2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int resX = 100;
-        int resY = 100;
-        double alfa = 2;
+        // nacteni parametru rozliseni a expenentu
+        int resX = 100; // rozliseni ve smeru x
+        int resY = 100; // rozliseni ve smeru y
+        double alfa = 2; // exponent
         try{
             String [] XxY = args[3].split("x");
             resX = Integer.parseInt(XxY[0]);
@@ -39,28 +40,45 @@ public class Du2 {
             System.err.print("Incorrect format of argument");
             System.exit(1);
         } 
-            
-        String tFile = args[0];
-        String []fileArr = loadT(tFile);
         
+        // nacteni vstupniho souboru do textoveho pole s prvky dle jednotlivych radku
+        String []stringArr = {};
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(args[0]));
+            String line;
+            List<String> list = new ArrayList<>();
+            while((line = br.readLine()) != null){
+                list.add(line);
+            }
+
+            stringArr = list.toArray(new String[0]);
+        } catch (FileNotFoundException ex) {
+            System.err.format("File %s not found",args[0]);
+            System.exit(1);
+        } catch (IOException ex) {
+            System.err.print("Error while reading a line");
+            System.exit(1);
+        }
+        
+        // urceni poctu radek vstupniho souboru
         int n = 20;
         try{        
-            n = Integer.parseInt(fileArr[0]);
+            n = Integer.parseInt(stringArr[0]);
         } catch(NumberFormatException ex){
             System.err.print("First line must state number of following lines");
             System.exit(1);
         }
         
-//        System.out.println("n: "+n);
-                
-        double []xd = new double[n];
-        double []yd = new double[n];
-        double []zd = new double[n];
+        // inicializace poli vstupnich souradnic a hodnot       
+        double []xd = new double[n]; // pole souradnic x
+        double []yd = new double[n]; // pole souradnic y
+        double []zd = new double[n]; // pole hodnot
         
+        // trideni a prevod souradnic a hodnot vstupniho souboru s osetrenim
         try{
             for (int j=1; j<=n; j++){
                 String [] items;
-                String line = fileArr[j];
+                String line = stringArr[j];
                 items = line.split(",");
                 for (int i=0; i<items.length; i++){
                     Double.parseDouble(items[i]);
@@ -70,15 +88,12 @@ public class Du2 {
                     }
                     if (i==0){
                         xd[j-1]=(Double.parseDouble(items[i]));
-//                        System.out.println("x: "+items[i]);
                     }
                     if (i==1){
                         yd[j-1]=(Double.parseDouble(items[i]));
-//                        System.out.println("y: "+items[i]);
                     }
                     if (i==2){
                         zd[j-1]=(Double.parseDouble(items[i]));
-//                        System.out.println("z: "+items[i]);
                     }
                 }
             }
@@ -90,9 +105,11 @@ public class Du2 {
             System.exit(1);
         }
         
+        // pole definujici souradnice mrize
         double []xx = getGrid(xd, resX);
         double []yy = getGrid(yd, resY);
         
+        // interpolace a zapis mrize vyslednych hodnot do souboru
         PrintWriter writer;
         try {
             writer = new PrintWriter(args[1]);
@@ -110,7 +127,12 @@ public class Du2 {
     
     public static double IDW1p(double []xd, double []yd, double []zd, double x, double y, double al){
     /** 
-     * 
+     * Interpolacni metoda IDW v 1 bodu.
+     * Interpoluje hodnotu bodu se souradnicemi [x, y] na zaklade mnoziny 
+     * vstupnich bodu se souradnicemi [xd, yd] a hodnotou zd. Exponent al
+     * urcije charakter ziskaneho "povrchu".
+     * Vice informaci o metode:
+     * https://en.wikipedia.org/wiki/Inverse_distance_weighting
      * 
      * @param   xd     
      * @param   yd     
@@ -119,39 +141,42 @@ public class Du2 {
      * @param   y
      * @param   al
      */        
-    
-        int nd=xd.length;
-        double r;
-        double []lam = new double[nd];
-        double []lambda = new double[nd];
-        double []zi = new double[nd];
-    
+        // inicializace promennych
+        int nd=xd.length; // delka vstupnich poli
+        double r; // vzdalenost
+        double []lam = new double[nd]; // pole vah
+        double []lambda = new double[nd]; // pole vah se sumou 1
+        double []zi = new double[nd]; // pole vazenych hodnot
+        
         for (int i=1; i<nd; i++){
-            r=Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2));
+            r=Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2)); // vypocet vzdalenosti
             if (r==0){
-                return zd[i];
+                return zd[i]; // hledana hodnota je v jedno ze vstupnich bodu
             }
             else{
-                lam[i]=1/Math.pow(r,al);
+                lam[i]=1/Math.pow(r,al); // vypocet vah
             }
         }
     
-    //
+        // vypocet vah se sumou 1
         double lamSum = DoubleStream.of(lam).sum();
         for (int i=0; i<nd; i++){
             lambda[i]=lam[i]/lamSum;
         }
     
-    //
+        // vazeni hodnot
         for (int i=0; i<nd; i++){
             zi[i]=zd[i]*lambda[i];
         }
+        // vysledna interpolovana hodnota
         return DoubleStream.of(zi).sum();
     }
     public static double getMax(double[] input){
     /** 
+     * Get Maximum.
+     * Vrati maximalni hodnotu pole.
      * 
-     * 
+     * @param  arr  pole souradnic vstupnich bodu x nebo y.
      */    
         double max = input[0]; 
         for(int i=1; i<input.length; i++){ 
@@ -161,23 +186,29 @@ public class Du2 {
         } 
         return max;
     }
-    public static double getMin(double[] arr){ 
+    public static double getMin(double[] input){ 
     /** 
+     * Get Minimum.
+     * Vrati minimalni hodnotu pole.
      * 
-     * 
+     * @param  arr  pole souradnic vstupnich bodu x nebo y.
      */    
-        double min = arr[0]; 
-        for(int i=1; i<arr.length; i++){ 
-            if(arr[i] < min){ 
-                min = arr[i]; 
+        double min = input[0]; 
+        for(int i=1; i<input.length; i++){ 
+            if(input[i] < min){ 
+                min = input[i]; 
             } 
         } 
         return min; 
     }
     public static double[] getGrid(double[] arr, int res){ 
     /** 
+     * Get Grid.
+     * Vrati pole souradnic bunek ve smeru osy x nebo y na zaklade 
+     * hodnoty rozliseni a extremnich hodnot pole.
      * 
-     * 
+     * @param  arr  pole souradnic vstupnich bodu x nebo y
+     * @param  res  celociselny pocet bunek ve smeru x nebo y
      */ 
         double []grid = new double[res];
         double cell = (getMax(arr)-getMin(arr))/res;
@@ -190,30 +221,5 @@ public class Du2 {
             }
         }    
         return grid;
-    }
-    public static String[] loadT(String file){
-    /** 
-     * 
-     * 
-     */
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-
-            List<String> list = new ArrayList<>();
-            while((line = br.readLine()) != null){
-                list.add(line);
-            }
-
-            String[] stringArr = list.toArray(new String[0]);
-            return stringArr;
-        } catch (FileNotFoundException ex) {
-            System.err.format("File %s not found",file);
-            System.exit(1);
-        } catch (IOException ex) {
-            System.err.print("Error while reading a line");
-            System.exit(1);
-        }
-        return null;
     }
 }
