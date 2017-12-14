@@ -109,7 +109,7 @@ public class Du2 {
      * Interpolacni metoda IDW v 1 bodu.
      * Interpoluje hodnotu bodu se souradnicemi [x, y] na zaklade mnoziny 
      * vstupnich bodu se souradnicemi [xd, yd] a hodnotou zd. Exponent al
-     * urcije charakter ziskaneho "povrchu".
+     * urcuje charakter vysledneho "povrchu".
      * Vice informaci o metode:
      * https://en.wikipedia.org/wiki/Inverse_distance_weighting
      * 
@@ -146,10 +146,10 @@ public class Du2 {
         return zi;
     }
     /** 
-     * Get Maximum.
+     * Vrati Maximum.
      * Vrati maximalni hodnotu pole.
      * 
-     * @param  input pole souradnic vstupnich bodu x nebo y.
+     * @param  input pole souradnic vstupnich bodu x nebo y
      * @return max   maximalni hodnota pole
      */ 
     public static double getMax(double[] input){   
@@ -162,10 +162,10 @@ public class Du2 {
         return max;
     }
     /** 
-     * Get Minimum.
+     * Vrati Minimum.
      * Vrati minimalni hodnotu pole.
      * 
-     * @param  input pole souradnic vstupnich bodu x nebo y.
+     * @param  input pole souradnic vstupnich bodu x nebo y
      * @return min   minimalni hodnota pole
      */   
     public static double getMin(double[] input){  
@@ -178,9 +178,9 @@ public class Du2 {
         return min; 
     }
     /** 
-     * Get Grid.
-     * Vrati pole souradnic bunek ve smeru osy x nebo y na zaklade 
-     * hodnoty rozliseni a extremnich hodnot pole.
+     * Definice mrize.
+     * Vrati pole souradnic bunek ve smeru jedne ze souradnicovych os na zaklade 
+     * prislusneho rozmeru mrize a extremnich hodnot pole.
      * 
      * @param  arr  pole souradnic vstupnich bodu x nebo y
      * @param  res  celociselny pocet bunek ve smeru x nebo y
@@ -200,12 +200,12 @@ public class Du2 {
         return grid;
     }
     /** 
-     * Load Data.
+     * Nacte data.
      * Nacte data ze souboru s cestou danou parametrem text a zapise jednotlive
      * radky do textoveho pole, ktere vrati.
      * 
-     * @param  text      
-     * @return stringArr 
+     * @param  text      cesta k textovovemu souboru
+     * @return stringArr textove pole s prvky dle radku textoveho souboru 
      */
     public static String[] loadData(String text){
         String []stringArr = {};
@@ -228,9 +228,9 @@ public class Du2 {
         return stringArr;
     }
     /** 
-     * Write Data.
-     * Provede interpolaci v bunkach mrizky definovane vstupnimi poly xx a yy 
-     * metodou IDW a zapise interpolovane hodnoty do souboru s cestou danou 
+     * Zapise data.
+     * Provede interpolaci v bunkach mrizky definovane vstupnimi poli xx a yy 
+     * funkce IDW1p a zapise interpolovane hodnoty do souboru s cestou danou 
      * parametrem text.
      * 
      * @param text cesta k souboru, do ktereho budou zapsany hodnoty     
