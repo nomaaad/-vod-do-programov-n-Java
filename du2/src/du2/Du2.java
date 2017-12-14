@@ -32,10 +32,21 @@ public class Du2 {
         int resY = 100; // rozliseni ve smeru y
         double alfa = 2; // exponent
         try{
-            String [] XxY = args[3].split("x");
-            resX = Integer.parseInt(XxY[0]);
-            resY = Integer.parseInt(XxY[1]);
-            alfa = Double.parseDouble(args[2]);
+//            System.out.println(args[0]);
+//            System.out.println(args[2]);
+            String s = args[0];
+            if (s.equals("-p")){
+                alfa = Double.parseDouble(args[1]);
+                String [] XxY = args[3].split("x");
+                resX = Integer.parseInt(XxY[0]);
+                resY = Integer.parseInt(XxY[1]);
+            }
+            else{
+                alfa = Double.parseDouble(args[3]);
+                String [] XxY = args[1].split("x");
+                resX = Integer.parseInt(XxY[0]);
+                resY = Integer.parseInt(XxY[1]);
+            }
         } catch(NumberFormatException ex){
             System.err.print("Incorrect format of argument");
             System.exit(1);
@@ -44,7 +55,7 @@ public class Du2 {
         // nacteni vstupniho souboru do textoveho pole s prvky dle jednotlivych radku
         String []stringArr = {};
         try {
-            BufferedReader br = new BufferedReader(new FileReader(args[0]));
+            BufferedReader br = new BufferedReader(new FileReader(args[4]));
             String line;
             List<String> list = new ArrayList<>();
             while((line = br.readLine()) != null){
@@ -53,7 +64,7 @@ public class Du2 {
 
             stringArr = list.toArray(new String[0]);
         } catch (FileNotFoundException ex) {
-            System.err.format("File %s not found",args[0]);
+            System.err.format("File %s not found",args[4]);
             System.exit(1);
         } catch (IOException ex) {
             System.err.print("Error while reading a line");
@@ -112,7 +123,7 @@ public class Du2 {
         // interpolace a zapis mrize vyslednych hodnot do souboru
         PrintWriter writer;
         try {
-            writer = new PrintWriter(args[1]);
+            writer = new PrintWriter(args[5]);
             for(int j=0; j<resY; j++){
                 for(int i=0; i<resX; i++){
                     writer.print(Math.round(IDW1p(xd, yd, zd, xx[i], yy[j], alfa)*100)/100.0+",");
