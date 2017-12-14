@@ -32,8 +32,6 @@ public class Du2 {
         int resY = 100; // rozliseni ve smeru y
         double alfa = 2; // exponent
         try{
-//            System.out.println(args[0]);
-//            System.out.println(args[2]);
             String s = args[0];
             if (s.equals("-p")){
                 alfa = Double.parseDouble(args[1]);
@@ -53,26 +51,7 @@ public class Du2 {
         } 
         
         // nacteni vstupniho souboru do textoveho pole s prvky dle jednotlivych radku
-        
         String []stringArr = loadData(args[4]);
-        
-//        String []stringArr = {};
-//        try {
-//            BufferedReader br = new BufferedReader(new FileReader(args[4]));
-//            String line;
-//            List<String> list = new ArrayList<>();
-//            while((line = br.readLine()) != null){
-//                list.add(line);
-//            }
-//
-//            stringArr = list.toArray(new String[0]);
-//        } catch (FileNotFoundException ex) {
-//            System.err.format("File %s not found",args[4]);
-//            System.exit(1);
-//        } catch (IOException ex) {
-//            System.err.print("Error while reading a line");
-//            System.exit(1);
-//        }
         
         // urceni poctu radek vstupniho souboru
         int n = 20;
@@ -125,23 +104,7 @@ public class Du2 {
         
         // interpolace a zapis mrize vyslednych hodnot do souboru
         writeData(args[5], xd, yd, zd, xx, yy, alfa, resX, resY);
-        
-        PrintWriter writer;
-        try {
-            writer = new PrintWriter(args[5]);
-            for(int j=0; j<resY; j++){
-                for(int i=0; i<resX; i++){
-                    writer.print(Math.round(IDW1p(xd, yd, zd, xx[i], yy[j], alfa)*100)/100.0+",");
-                }
-                writer.println();
-            }
-            writer.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Du2.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
-    
-    public static double IDW1p(double []xd, double []yd, double []zd, double x, double y, double al){
     /** 
      * Interpolacni metoda IDW v 1 bodu.
      * Interpoluje hodnotu bodu se souradnicemi [x, y] na zaklade mnoziny 
@@ -150,19 +113,20 @@ public class Du2 {
      * Vice informaci o metode:
      * https://en.wikipedia.org/wiki/Inverse_distance_weighting
      * 
-     * @param   xd     
-     * @param   yd     
-     * @param   zd   
-     * @param   x
-     * @param   y
-     * @param   al
-     */        
+     * @param  xd souradnice x vstupnich bodu    
+     * @param  yd souradnice y vstupnich bodu  
+     * @param  zd hodnota vstupnich bodu    
+     * @param  x  souradnice x interpolovaneho bodu
+     * @param  y  souradnice y interpolovaneho bodu
+     * @param  al exponent interpolacni metody IDW
+     * @return zi vysledna interpolovana hodnota
+     */ 
+    public static double IDW1p(double []xd, double []yd, double []zd, double x, double y, double al){       
         // inicializace promennych
         int nd=xd.length; // delka vstupnich poli
         double r; // vzdalenost
         double []lam = new double[nd]; // pole vah
-        double []lambda = new double[nd]; // pole vah se sumou 1
-        double []zi = new double[nd]; // pole vazenych hodnot
+        double zi = 0; // pole vazenych hodnot
         
         for (int i=1; i<nd; i++){
             r=Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2)); // vypocet vzdalenosti
@@ -174,26 +138,21 @@ public class Du2 {
             }
         }
     
-        // vypocet vah se sumou 1
+        // vazeni hodnot a vypocet vysledne hodnoty
         double lamSum = DoubleStream.of(lam).sum();
         for (int i=0; i<nd; i++){
-            lambda[i]=lam[i]/lamSum;
+            zi += zd[i]*(lam[i]/lamSum);   
         }
-    
-        // vazeni hodnot
-        for (int i=0; i<nd; i++){
-            zi[i]=zd[i]*lambda[i];
-        }
-        // vysledna interpolovana hodnota
-        return DoubleStream.of(zi).sum();
+        return zi;
     }
-    public static double getMax(double[] input){
     /** 
      * Get Maximum.
      * Vrati maximalni hodnotu pole.
      * 
-     * @param  arr  pole souradnic vstupnich bodu x nebo y.
-     */    
+     * @param  input pole souradnic vstupnich bodu x nebo y.
+     * @return max   maximalni hodnota pole
+     */ 
+    public static double getMax(double[] input){   
         double max = input[0]; 
         for(int i=1; i<input.length; i++){ 
             if(input[i] > max){ 
@@ -202,13 +161,14 @@ public class Du2 {
         } 
         return max;
     }
-    public static double getMin(double[] input){ 
     /** 
      * Get Minimum.
      * Vrati minimalni hodnotu pole.
      * 
-     * @param  arr  pole souradnic vstupnich bodu x nebo y.
-     */    
+     * @param  input pole souradnic vstupnich bodu x nebo y.
+     * @return min   minimalni hodnota pole
+     */   
+    public static double getMin(double[] input){  
         double min = input[0]; 
         for(int i=1; i<input.length; i++){ 
             if(input[i] < min){ 
@@ -217,7 +177,6 @@ public class Du2 {
         } 
         return min; 
     }
-    public static double[] getGrid(double[] arr, int res){ 
     /** 
      * Get Grid.
      * Vrati pole souradnic bunek ve smeru osy x nebo y na zaklade 
@@ -225,7 +184,9 @@ public class Du2 {
      * 
      * @param  arr  pole souradnic vstupnich bodu x nebo y
      * @param  res  celociselny pocet bunek ve smeru x nebo y
-     */ 
+     * @return grid pole souradnic bunek ve smeru jedne osy 
+     */
+    public static double[] getGrid(double[] arr, int res){ 
         double []grid = new double[res];
         double cell = (getMax(arr)-getMin(arr))/res;
         for(int i=0; i<res; i++){
@@ -238,6 +199,14 @@ public class Du2 {
         }    
         return grid;
     }
+    /** 
+     * Load Data.
+     * Nacte data ze souboru s cestou danou parametrem text a zapise jednotlive
+     * radky do textoveho pole, ktere vrati.
+     * 
+     * @param  text      
+     * @return stringArr 
+     */
     public static String[] loadData(String text){
         String []stringArr = {};
         try {
@@ -258,6 +227,22 @@ public class Du2 {
         }
         return stringArr;
     }
+    /** 
+     * Write Data.
+     * Provede interpolaci v bunkach mrizky definovane vstupnimi poly xx a yy 
+     * metodou IDW a zapise interpolovane hodnoty do souboru s cestou danou 
+     * parametrem text.
+     * 
+     * @param text cesta k souboru, do ktereho budou zapsany hodnoty     
+     * @param xd   souradnice x vstupnich bodu    
+     * @param yd   souradnice y vstupnich bodu  
+     * @param zd   hodnota vstupnich bodu   
+     * @param xx   pole souradnic bunek ve smeru osy x   
+     * @param yy   pole souradnic bunek ve smeru osy y
+     * @param alfa exponent interpolacni metody IDW
+     * @param resX rozliseni na ose x
+     * @param resY rozliseni na ose y
+     */
     public static void writeData(String text, double []xd, double[]yd, double[]zd, double []xx, double []yy, double alfa, int resX, int resY){
         PrintWriter writer;
         try {
