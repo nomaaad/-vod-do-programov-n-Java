@@ -53,23 +53,26 @@ public class Du2 {
         } 
         
         // nacteni vstupniho souboru do textoveho pole s prvky dle jednotlivych radku
-        String []stringArr = {};
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(args[4]));
-            String line;
-            List<String> list = new ArrayList<>();
-            while((line = br.readLine()) != null){
-                list.add(line);
-            }
-
-            stringArr = list.toArray(new String[0]);
-        } catch (FileNotFoundException ex) {
-            System.err.format("File %s not found",args[4]);
-            System.exit(1);
-        } catch (IOException ex) {
-            System.err.print("Error while reading a line");
-            System.exit(1);
-        }
+        
+        String []stringArr = loadData(args[4]);
+        
+//        String []stringArr = {};
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader(args[4]));
+//            String line;
+//            List<String> list = new ArrayList<>();
+//            while((line = br.readLine()) != null){
+//                list.add(line);
+//            }
+//
+//            stringArr = list.toArray(new String[0]);
+//        } catch (FileNotFoundException ex) {
+//            System.err.format("File %s not found",args[4]);
+//            System.exit(1);
+//        } catch (IOException ex) {
+//            System.err.print("Error while reading a line");
+//            System.exit(1);
+//        }
         
         // urceni poctu radek vstupniho souboru
         int n = 20;
@@ -121,6 +124,8 @@ public class Du2 {
         double []yy = getGrid(yd, resY);
         
         // interpolace a zapis mrize vyslednych hodnot do souboru
+        writeData(args[5], xd, yd, zd, xx, yy, alfa, resX, resY);
+        
         PrintWriter writer;
         try {
             writer = new PrintWriter(args[5]);
@@ -232,5 +237,40 @@ public class Du2 {
             }
         }    
         return grid;
+    }
+    public static String[] loadData(String text){
+        String []stringArr = {};
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(text));
+            String line;
+            List<String> list = new ArrayList<>();
+            while((line = br.readLine()) != null){
+                list.add(line);
+            }
+
+            stringArr = list.toArray(new String[0]);
+        } catch (FileNotFoundException ex) {
+            System.err.format("File %s not found",text);
+            System.exit(1);
+        } catch (IOException ex) {
+            System.err.print("Error while reading a line");
+            System.exit(1);
+        }
+        return stringArr;
+    }
+    public static void writeData(String text, double []xd, double[]yd, double[]zd, double []xx, double []yy, double alfa, int resX, int resY){
+        PrintWriter writer;
+        try {
+            writer = new PrintWriter(text);
+            for(int j=0; j<resY; j++){
+                for(int i=0; i<resX; i++){
+                    writer.print(Math.round(IDW1p(xd, yd, zd, xx[i], yy[j], alfa)*100)/100.0+",");
+                }
+                writer.println();
+            }
+            writer.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Du2.class.getName()).log(Level.SEVERE, null, ex);
+        }    
     }
 }
