@@ -32,6 +32,8 @@ public class Du2 {
         int resY = 100; // rozliseni ve smeru y
         double alfa = 2; // exponent
         int fileArg = 4; // index argumentu vstupnich dat
+        
+        // nacteni argumentu
         try{
             if (args[0].equals("-p") && args[2].equals("-g")){
                 alfa = Double.parseDouble(args[1]);
@@ -93,22 +95,9 @@ public class Du2 {
                 String [] items;
                 String line = stringArr[j];
                 items = line.split(",");
-                for (int i=0; i<items.length; i++){
-                    Double.parseDouble(items[i]);
-                    if (items.length!=3){
-                        System.err.print("Incorrect number of value(s) in line");
-                        System.exit(1);
-                    }
-                    if (i==0){
-                        xd[j-1]=(Double.parseDouble(items[i]));
-                    }
-                    if (i==1){
-                        yd[j-1]=(Double.parseDouble(items[i]));
-                    }
-                    if (i==2){
-                        zd[j-1]=(Double.parseDouble(items[i]));
-                    }
-                }
+                xd[j-1]=(Double.parseDouble(items[0]));
+                yd[j-1]=(Double.parseDouble(items[1]));
+                zd[j-1]=(Double.parseDouble(items[2]));
             }
         } catch(ArrayIndexOutOfBoundsException ex){
             System.err.print("Missing line(s) in input file");
@@ -213,7 +202,7 @@ public class Du2 {
      */
     public static double[] getGrid(double[] arr, int res){ 
         double []grid = new double[res];
-        double cell = (getMax(arr)-getMin(arr))/res;
+        //double cell = (getMax(arr)-getMin(arr))/res;
         double diff = getMax(arr)-getMin(arr);
         grid[0]=getMin(arr);
         for(int i=1; i<res; i++){
