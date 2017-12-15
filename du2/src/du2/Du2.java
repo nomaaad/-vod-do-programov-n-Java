@@ -189,14 +189,18 @@ public class Du2 {
     public static double[] getGrid(double[] arr, int res){ 
         double []grid = new double[res];
         double cell = (getMax(arr)-getMin(arr))/res;
+        double diff = getMax(arr)-getMin(arr);
         for(int i=0; i<res; i++){
             if(i==0){
                 grid[0]=getMin(arr);
             }
             else{
-                grid[i]=grid[i-1]+cell;
+                grid[i]=grid[0]+((i*1.0/res)*diff);
             }
-        }    
+        }
+        //System.out.println(getMax(arr));
+        //System.out.println(grid[res-1]);
+        //System.out.println(cell);
         return grid;
     }
     /** 
