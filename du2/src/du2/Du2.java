@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.DoubleStream;
 
 /**
  * GRID INTERPOLATION USING IDW
@@ -111,25 +110,25 @@ public class Du2 {
         double zi = 0; // vysledna interpolovana hodnota
 //        double []lam = new double[nd]; // pole vah
 //        
-//        for (int i=0; i<nd; i++){
-//            r=Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2)); // vypocet vzdalenosti
-//            if (r==0){
+//        for (int i = 0; i < nd; i++){
+//            r = Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2)); // vypocet vzdalenosti
+//            if (r == 0){
 //                return zd[i]; // hledana hodnota je v jednom ze vstupnich bodu
 //            }
 //            else{
-//                lam[i]=1/Math.pow(r,al); // vypocet vah
+//                lam[i] = 1/Math.pow(r,al); // vypocet vah
 //                lamSum += lam[i];
 //            }
 //        }
 //    
 //        // vazeni hodnot a vypocet vysledne hodnoty
-//        for (int i=0; i<nd; i++){
+//        for (int i = 0; i < nd; i++){
 //            zi += zd[i]*(lam[i]/lamSum);
 //        }
 //        return zi;
-        for (int i=0; i<nd; i++){
-            r=Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2)); // vypocet vzdalenosti
-            if (r==0){
+        for (int i = 0; i < nd; i++){
+            r = Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2)); // vypocet vzdalenosti
+            if (r == 0){
                 return zd[i]; // hledana hodnota je v jednom ze vstupnich bodu
             }
             else{
@@ -138,8 +137,8 @@ public class Du2 {
         }
         
         // vazeni hodnot a vypocet vysledne hodnoty
-        for (int i=0; i<nd; i++){
-            r=Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2));
+        for (int i = 0; i < nd; i++){
+            r = Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2));
             zi += zd[i]*((1/Math.pow(r,al))/lamSum);
         }
         return zi;
@@ -153,7 +152,7 @@ public class Du2 {
      */ 
     public static double getMax(double[] input){   
         double max = input[0]; 
-        for(int i=1; i<input.length; i++){ 
+        for(int i = 1; i < input.length; i++){ 
             if(input[i] > max){ 
                 max = input[i]; 
             } 
@@ -169,7 +168,7 @@ public class Du2 {
      */   
     public static double getMin(double[] input){  
         double min = input[0]; 
-        for(int i=1; i<input.length; i++){ 
+        for(int i = 1; i < input.length; i++){ 
             if(input[i] < min){ 
                 min = input[i]; 
             } 
@@ -188,14 +187,14 @@ public class Du2 {
     public static double[] getGrid(double[] arr, int res){ 
         double []grid = new double[res];
         double diff = getMax(arr)-getMin(arr);
-        grid[0]=getMin(arr);
-        for(int i=1; i<res; i++){
-            if(i==0){
+        grid[0] = getMin(arr);
+        for(int i = 1; i < res; i++){
+            if(i == 0){
             }
             else{
-                grid[i]=grid[0]+((i*1.0/res)*diff);
+                grid[i] = grid[0]+((i*1.0/res)*diff);
             }
-        };
+        }
         return grid;
     }
     /** 
@@ -240,13 +239,13 @@ public class Du2 {
         
         // parsovani a trideni textoveho pole do ciselnych poli dle souradnice/hodnoty
         try{
-            for (int j=1; j<=n; j++){
+            for (int j = 1; j <= n; j++){
                 String [] items;
                 String line = stringArr[j];
                 items = line.split(",");
-                xd[j-1]=(Double.parseDouble(items[0]));
-                yd[j-1]=(Double.parseDouble(items[1]));
-                zd[j-1]=(Double.parseDouble(items[2]));
+                xd[j-1] = (Double.parseDouble(items[0]));
+                yd[j-1] = (Double.parseDouble(items[1]));
+                zd[j-1] = (Double.parseDouble(items[2]));
             }
         } catch (ArrayIndexOutOfBoundsException ex){
             System.err.print("Missing line(s) in input file");
@@ -280,8 +279,8 @@ public class Du2 {
         PrintWriter writer;
         try {
             writer = new PrintWriter(text);
-            for(int j=0; j<resY; j++){
-                for(int i=0; i<resX; i++){
+            for(int j = 0; j<resY; j++){
+                for(int i = 0; i<resX; i++){
                     writer.print(Math.round(IDW1p(xd, yd, zd, xx[i], yy[j], alfa)*100)/100.0+",");
                 }
                 writer.println();
