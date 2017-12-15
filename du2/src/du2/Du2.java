@@ -66,54 +66,22 @@ public class Du2 {
             System.exit(1);
         } 
         
-        // nacteni vstupniho souboru do textoveho pole s prvky dle jednotlivych radku
-        String []stringArr = {};
+        // nacteni vstupniho souboru do pole s prvky poli dle souradnice/hodnoty
+        double [][]arrOfArr = {};
         try{
-            stringArr = loadData(args[fileArg]);
+            arrOfArr = loadData(args[fileArg]);
         } catch(ArrayIndexOutOfBoundsException ex){
             System.err.print("No input file given");
             System.exit(1);
         }
         
-        // urceni poctu radek vstupniho souboru
-        int n = 20;
-        try{        
-            n = Integer.parseInt(stringArr[0]);
-        } catch(NumberFormatException ex){
-            System.err.print("First line must state number of following lines");
-            System.exit(1);
-        }
-        
-        // inicializace poli vstupnich souradnic a hodnot       
-        double []xd = new double[n]; // pole souradnic x
-        double []yd = new double[n]; // pole souradnic y
-        double []zd = new double[n]; // pole hodnot
-        
-        // trideni a prevod souradnic a hodnot vstupniho souboru s osetrenim
-        try{
-            for (int j=1; j<=n; j++){
-                String [] items;
-                String line = stringArr[j];
-                items = line.split(",");
-                xd[j-1]=(Double.parseDouble(items[0]));
-                yd[j-1]=(Double.parseDouble(items[1]));
-                zd[j-1]=(Double.parseDouble(items[2]));
-            }
-        } catch(ArrayIndexOutOfBoundsException ex){
-            System.err.print("Missing line(s) in input file");
-            System.exit(1);
-        } catch(NumberFormatException ex){
-            System.err.print("NaN in input file");
-            System.exit(1);
-        }
-        
         // pole definujici souradnice mrize
-        double []xx = getGrid(xd, resX);
-        double []yy = getGrid(yd, resY);
+        double []xx = getGrid(arrOfArr[0], resX);
+        double []yy = getGrid(arrOfArr[1], resY);
         
         // interpolace a zapis mrize vyslednych hodnot do souboru
         try{
-            writeData(args[fileArg+1], xd, yd, zd, xx, yy, alfa, resX, resY);
+            writeData(args[fileArg+1], arrOfArr[0], arrOfArr[1], arrOfArr[2], xx, yy, alfa, resX, resY);
         } catch(ArrayIndexOutOfBoundsException ex){
             System.err.print("No output file given");
             System.exit(1);
@@ -127,13 +95,13 @@ public class Du2 {
      * Vice informaci o metode:
      * https://en.wikipedia.org/wiki/Inverse_distance_weighting
      * 
-     * @param  xd souradnice x vstupnich bodu    
-     * @param  yd souradnice y vstupnich bodu  
-     * @param  zd hodnota vstupnich bodu    
-     * @param  x  souradnice x interpolovaneho bodu
-     * @param  y  souradnice y interpolovaneho bodu
-     * @param  al exponent interpolacni metody IDW
-     * @return zi vysledna interpolovana hodnota
+     * @param xd souradnice x vstupnich bodu    
+     * @param yd souradnice y vstupnich bodu  
+     * @param zd hodnota vstupnich bodu    
+     * @param x  souradnice x interpolovaneho bodu
+     * @param y  souradnice y interpolovaneho bodu
+     * @param al exponent interpolacni metody IDW
+     * @return vysledna interpolovana hodnota
      */ 
     public static double IDW1p(double []xd, double []yd, double []zd, double x, double y, double al){       
         // inicializace promennych
@@ -163,8 +131,8 @@ public class Du2 {
      * Vrati Maximum.
      * Vrati maximalni hodnotu pole.
      * 
-     * @param  input pole souradnic vstupnich bodu x nebo y
-     * @return max   maximalni hodnota pole
+     * @param input pole souradnic vstupnich bodu x nebo y
+     * @return maximalni hodnota pole
      */ 
     public static double getMax(double[] input){   
         double max = input[0]; 
@@ -179,8 +147,8 @@ public class Du2 {
      * Vrati Minimum.
      * Vrati minimalni hodnotu pole.
      * 
-     * @param  input pole souradnic vstupnich bodu x nebo y
-     * @return min   minimalni hodnota pole
+     * @param input pole souradnic vstupnich bodu x nebo y
+     * @return minimalni hodnota pole
      */   
     public static double getMin(double[] input){  
         double min = input[0]; 
@@ -196,9 +164,9 @@ public class Du2 {
      * Vrati pole souradnic bunek ve smeru jedne ze souradnicovych os na zaklade 
      * prislusneho rozmeru mrize a extremnich hodnot pole.
      * 
-     * @param  arr  pole souradnic vstupnich bodu x nebo y
-     * @param  res  celociselny pocet bunek ve smeru x nebo y
-     * @return grid pole souradnic bunek ve smeru jedne osy 
+     * @param arr pole souradnic vstupnich bodu x nebo y
+     * @param res celociselny pocet bunek ve smeru x nebo y
+     * @return pole souradnic bunek ve smeru jedne osy 
      */
     public static double[] getGrid(double[] arr, int res){ 
         double []grid = new double[res];
@@ -222,11 +190,12 @@ public class Du2 {
      * Nacte data ze souboru s cestou danou parametrem text a zapise jednotlive
      * radky do textoveho pole, ktere vrati.
      * 
-     * @param  text      cesta k textovovemu souboru
-     * @return stringArr textove pole s prvky dle radku textoveho souboru 
+     * @param text cesta k textovovemu souboru
+     * @return textove pole s prvky dle radku textoveho souboru 
      */
-    public static String[] loadData(String text){
+    public static double[][] loadData(String text){
         String []stringArr = {};
+        int n = 20;
         try {
             BufferedReader br = new BufferedReader(new FileReader(text));
             String line;
@@ -234,16 +203,41 @@ public class Du2 {
             while((line = br.readLine()) != null){
                 list.add(line);
             }
-
             stringArr = list.toArray(new String[0]);
+            n = Integer.parseInt(stringArr[0]);
         } catch (FileNotFoundException ex) {
             System.err.format("File %s not found",text);
             System.exit(1);
         } catch (IOException ex) {
             System.err.print("Error while reading a line");
             System.exit(1);
+        } catch (NumberFormatException ex){
+            System.err.print("First line must state number of following lines");
+            System.exit(1);
         }
-        return stringArr;
+        
+        double []xd = new double[n]; // pole souradnic x
+        double []yd = new double[n]; // pole souradnic y
+        double []zd = new double[n]; // pole hodnot
+                
+        try{
+            for (int j=1; j<=n; j++){
+                String [] items;
+                String line = stringArr[j];
+                items = line.split(",");
+                xd[j-1]=(Double.parseDouble(items[0]));
+                yd[j-1]=(Double.parseDouble(items[1]));
+                zd[j-1]=(Double.parseDouble(items[2]));
+            }
+        } catch (ArrayIndexOutOfBoundsException ex){
+            System.err.print("Missing line(s) in input file");
+            System.exit(1);
+        } catch (NumberFormatException ex){
+            System.err.print("NaN in input file");
+            System.exit(1);
+        }
+        double [][]arrOfArr = {xd,yd,zd};
+        return arrOfArr;
     }
     /** 
      * Zapise data.
