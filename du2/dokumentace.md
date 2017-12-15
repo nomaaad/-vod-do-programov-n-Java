@@ -1,13 +1,10 @@
-# Domácí úkol 2 - IDW
-
+﻿# Domácí úkol 2 - IDW
 
 Předmět: **Úvod do programování**, Autor: **Bc. Jan Čermák**, Obor: **1. NKARTGD**, Rok: **2017**
 
-
-
 ## Popis
 
-Neinteraktivní program, který interpoluje vstupní data metodou inverzní vážené vzdálenosti (IDW). Interpolace umožňuje odhadnout vliv bodů s naměřenou na jejich okolí. Program vezme jako argumenty vstupní a výstupní soubor a spočítá interpolaci vstupních dat v mřížových bodech sítě s rozměry dle argumentu `-g`. Velikost výstupní sítě je dané dle bodů s minimálními resp. maximálními souřadnicemi. Interpolační metoda lze ovlivnit argumentem exponentu `-p`. V případě zadání nekorektních vstupů program vypíše popis chyby a skončí s chybou.
+Neinteraktivní program, který interpoluje vstupní data metodou inverzní vážené vzdálenosti (IDW). Interpolace umožňuje odhadnout vliv bodů s naměřenou na jejich okolí. Program vezme jako argumenty vstupní a výstupní soubor a spočítá interpolaci vstupních dat v mřížových bodech sítě s rozměry dle argumentu `-g`. Velikost výstupní sítě je dané dle bodů s minimálními, resp. maximálními souřadnicemi. Interpolační metoda lze ovlivnit argumentem exponentu `-p`. V případě zadání nekorektních vstupů program vypíše popis chyby a skončí s chybou.
 
 ### Vstup
 
@@ -16,7 +13,6 @@ Program nejdříve vezme parametr `-p <cislo>`, které použije jako exponent ve
 ### Výstup
 
 Výstupní soubor obsahuje definovaný počet řádků a sloupců, které představují interpolované hodnoty v mřížových bodech. Hodnoty jsou zaokrouhlené na dvě desetinná místa.
-
 
 ### Funkce
 
@@ -41,9 +37,9 @@ Výstupní soubor obsahuje definovaný počet řádků a sloupců, které předs
 - **výstup**: souřadnice buněk jedné strany mříže *grid*
 
 `loadData` - **Načte data**
-- Načte data ze souboru s cestou danou parametrem *text* a zapíše jednotlivé řádky do textového pole *stringArr*, které vrátí.
+- Načte data ze souboru s cestou danou parametrem *text*. Převede řádky souboru do textového pole, které následně roztřídí do pole *arrOfArr* s prvky numerických polí dle souřadnic x, y a hodnoty.
 - **parametry**: řetězec *text*
-- **výstup**: textové pole s prvky dle řádku textového souboru *stringArr*
+- **výstup**: pole numerických polí *arrOfArr*
 
 `writeData` - **Zapíše data**
 - Provede interpolaci v buňkách mřížky definované vstupními poli *xx* a *yy* (s délkou *resX* a *resY*) dle funkce `IDW1p` a zapíše interpolované hodnoty do souboru s cestou danou parametrem *text*

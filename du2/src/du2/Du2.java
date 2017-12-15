@@ -105,25 +105,42 @@ public class Du2 {
      */ 
     public static double IDW1p(double []xd, double []yd, double []zd, double x, double y, double al){       
         // inicializace promennych
-        int nd=xd.length; // delka vstupnich poli
+        int nd = xd.length; // delka vstupnich poli
         double r; // vzdalenost
-        double []lam = new double[nd]; // pole vah
-        double zi = 0; // pole vazenych hodnot
-        
-        for (int i=1; i<nd; i++){
+        double lamSum = 0; // suma vah
+        double zi = 0; // vysledna interpolovana hodnota
+//        double []lam = new double[nd]; // pole vah
+//        
+//        for (int i=0; i<nd; i++){
+//            r=Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2)); // vypocet vzdalenosti
+//            if (r==0){
+//                return zd[i]; // hledana hodnota je v jednom ze vstupnich bodu
+//            }
+//            else{
+//                lam[i]=1/Math.pow(r,al); // vypocet vah
+//                lamSum += lam[i];
+//            }
+//        }
+//    
+//        // vazeni hodnot a vypocet vysledne hodnoty
+//        for (int i=0; i<nd; i++){
+//            zi += zd[i]*(lam[i]/lamSum);
+//        }
+//        return zi;
+        for (int i=0; i<nd; i++){
             r=Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2)); // vypocet vzdalenosti
             if (r==0){
-                return zd[i]; // hledana hodnota je v jedno ze vstupnich bodu
+                return zd[i]; // hledana hodnota je v jednom ze vstupnich bodu
             }
             else{
-                lam[i]=1/Math.pow(r,al); // vypocet vah
+                lamSum += 1/Math.pow(r,al);
             }
         }
-    
+        
         // vazeni hodnot a vypocet vysledne hodnoty
-        double lamSum = DoubleStream.of(lam).sum();
         for (int i=0; i<nd; i++){
-            zi += zd[i]*(lam[i]/lamSum);   
+            r=Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2));
+            zi += zd[i]*((1/Math.pow(r,al))/lamSum);
         }
         return zi;
     }
@@ -170,32 +187,32 @@ public class Du2 {
      */
     public static double[] getGrid(double[] arr, int res){ 
         double []grid = new double[res];
-        //double cell = (getMax(arr)-getMin(arr))/res;
         double diff = getMax(arr)-getMin(arr);
         grid[0]=getMin(arr);
         for(int i=1; i<res; i++){
-            if(i==0){  
+            if(i==0){
             }
             else{
                 grid[i]=grid[0]+((i*1.0/res)*diff);
             }
-        }
-        //System.out.println(getMax(arr));
-        //System.out.println(grid[res-1]);
-        //System.out.println(cell);
+        };
         return grid;
     }
     /** 
      * Nacte data.
-     * Nacte data ze souboru s cestou danou parametrem text a zapise jednotlive
-     * radky do textoveho pole, ktere vrati.
+     * Nacte data ze souboru s cestou danou parametrem text. Prevede radky 
+     * souboru do textoveho pole, ktere nasledne roztridi do pole s prvky 
+     * numerickych poli dle souradnic x, y a hodnoty.
      * 
      * @param text cesta k textovovemu souboru
-     * @return textove pole s prvky dle radku textoveho souboru 
+     * @return pole s prvky numerickych poli dle souradnic x, y a hodnoty
      */
     public static double[][] loadData(String text){
-        String []stringArr = {};
-        int n = 20;
+        // inicializace pracovnich promennych
+        String []stringArr = {}; // textove pole s prvky dle radku vstupniho souboru
+        int n = 20; // pocet bodu ve vstupnim souboru
+        
+        // nacteni vstupniho souboru do textoveho pole
         try {
             BufferedReader br = new BufferedReader(new FileReader(text));
             String line;
@@ -216,10 +233,12 @@ public class Du2 {
             System.exit(1);
         }
         
+        // inicializace prvku vystupniho pole
         double []xd = new double[n]; // pole souradnic x
         double []yd = new double[n]; // pole souradnic y
         double []zd = new double[n]; // pole hodnot
-                
+        
+        // parsovani a trideni textoveho pole do ciselnych poli dle souradnice/hodnoty
         try{
             for (int j=1; j<=n; j++){
                 String [] items;
@@ -236,6 +255,8 @@ public class Du2 {
             System.err.print("NaN in input file");
             System.exit(1);
         }
+        
+        // poskladani vystupniho pole a jeho vraceni
         double [][]arrOfArr = {xd,yd,zd};
         return arrOfArr;
     }
