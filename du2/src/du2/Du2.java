@@ -31,19 +31,33 @@ public class Du2 {
         int resX = 100; // rozliseni ve smeru x
         int resY = 100; // rozliseni ve smeru y
         double alfa = 2; // exponent
+        int fileArg = 4; // index argumentu vstupnich dat
         try{
-            String s = args[0];
-            if (s.equals("-p")){
+            if (args[0].equals("-p") && args[2].equals("-g")){
                 alfa = Double.parseDouble(args[1]);
                 String [] XxY = args[3].split("x");
                 resX = Integer.parseInt(XxY[0]);
                 resY = Integer.parseInt(XxY[1]);
             }
-            else{
+            else if (args[0].equals("-g") && args[2].equals("-p")){
                 alfa = Double.parseDouble(args[3]);
                 String [] XxY = args[1].split("x");
                 resX = Integer.parseInt(XxY[0]);
                 resY = Integer.parseInt(XxY[1]);
+            }
+            else if (args[0].equals("-g") || args[0].equals("-p")){
+                fileArg = 2;
+                if (args[0].equals("-g")){
+                    String [] XxY = args[1].split("x");
+                    resX = Integer.parseInt(XxY[0]);
+                    resY = Integer.parseInt(XxY[1]);
+                }
+                else{
+                    alfa = Double.parseDouble(args[1]);
+                }
+            }
+            else{
+                fileArg = 0;
             }
         } catch(NumberFormatException ex){
             System.err.print("Incorrect format of argument");
@@ -51,7 +65,13 @@ public class Du2 {
         } 
         
         // nacteni vstupniho souboru do textoveho pole s prvky dle jednotlivych radku
-        String []stringArr = loadData(args[4]);
+        String []stringArr = {};
+        try{
+            stringArr = loadData(args[fileArg]);
+        } catch(ArrayIndexOutOfBoundsException ex){
+            System.err.print("No input file given");
+            System.exit(1);
+        }
         
         // urceni poctu radek vstupniho souboru
         int n = 20;
@@ -103,7 +123,12 @@ public class Du2 {
         double []yy = getGrid(yd, resY);
         
         // interpolace a zapis mrize vyslednych hodnot do souboru
-        writeData(args[5], xd, yd, zd, xx, yy, alfa, resX, resY);
+        try{
+            writeData(args[fileArg+1], xd, yd, zd, xx, yy, alfa, resX, resY);
+        } catch(ArrayIndexOutOfBoundsException ex){
+            System.err.print("No output file given");
+            System.exit(1);
+        }
     }
     /** 
      * Interpolacni metoda IDW v 1 bodu.
@@ -190,9 +215,9 @@ public class Du2 {
         double []grid = new double[res];
         double cell = (getMax(arr)-getMin(arr))/res;
         double diff = getMax(arr)-getMin(arr);
-        for(int i=0; i<res; i++){
-            if(i==0){
-                grid[0]=getMin(arr);
+        grid[0]=getMin(arr);
+        for(int i=1; i<res; i++){
+            if(i==0){  
             }
             else{
                 grid[i]=grid[0]+((i*1.0/res)*diff);
