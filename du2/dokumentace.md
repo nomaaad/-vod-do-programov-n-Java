@@ -7,7 +7,7 @@ Předmět: **Úvod do programování**, Autor: **Bc. Jan Čermák**, Obor: **1. 
 
 ## Popis
 
-Neinteraktivní program, který interpoluje vstupní data metodou inverzní vážené vzdálenosti (IDW). Interpolace umožňuje odhadnout vliv bodů s naměřenou na jejich okolí. Program vezme jako argumenty vstupní a výstupní soubor a spočítá interpolaci vstupních dat v mřížových bodech sítě s rozměry dle argumentu `-g`. Velikost výstupní sítě je dané dle bodů s minimálními resp. maximálními souřadnicemi. Interpolační medoda lze ovlivnit argumentem exponentu `-p`. V případě zadání nekorektních vstupů program vypíše popis chyby a skončí s chybou.
+Neinteraktivní program, který interpoluje vstupní data metodou inverzní vážené vzdálenosti (IDW). Interpolace umožňuje odhadnout vliv bodů s naměřenou na jejich okolí. Program vezme jako argumenty vstupní a výstupní soubor a spočítá interpolaci vstupních dat v mřížových bodech sítě s rozměry dle argumentu `-g`. Velikost výstupní sítě je dané dle bodů s minimálními resp. maximálními souřadnicemi. Interpolační metoda lze ovlivnit argumentem exponentu `-p`. V případě zadání nekorektních vstupů program vypíše popis chyby a skončí s chybou.
 
 ### Vstup
 
