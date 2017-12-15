@@ -1,59 +1,50 @@
-# Domácí úkol 2 - IDW
+# DomÃ¡cÃ­ Ãºkol 2 - IDW
 
 
-Pøedmìt: **Úvod do programování**, Autor: **Bc. Jan Èermák**, Obor: **1. NKARTGD**, Rok: **2017**
+PÅ™edmÄ›t: **Ãšvod do programovÃ¡nÃ­**, Autor: **Bc. Jan ÄŒermÃ¡k**, Obor: **1. NKARTGD**, Rok: **2017**
 
 
 
 ## Popis
 
-Neinteraktivní program, kterı interpoluje vstupní data metodou
- inverzní váené vzdálenosti (IDW). Interpolace umoòuje odhadnout vliv bodù s namìøenou na jejich okolí. Program vezme jako argumenty vstupní a 
-vıstupní soubor a spoèítá interpolaci vstupních dat v møíovıch bodech sítì s rozlišením dle argumentu `-g`. 
-Vıstupní sí má rozmìry, dle bodù s minimálními
- respektive maximálními souøadnicemi. Interpolaèní medoda lze ovlivnit argumentem exponentu `-p`. V pøípadì zadání nekorektních vstupù program vypíše popis chyby a skonèí s chybou.
+NeinteraktivnÃ­ program, kterÃ½ interpoluje vstupnÃ­ data metodou inverznÃ­ vÃ¡Å¾enÃ© vzdÃ¡lenosti (IDW). Interpolace umoÅ¾Åˆuje odhadnout vliv bodÅ¯ s namÄ›Å™enou na jejich okolÃ­. Program vezme jako argumenty vstupnÃ­ a vÃ½stupnÃ­ soubor a spoÄÃ­tÃ¡ interpolaci vstupnÃ­ch dat v mÅ™Ã­Å¾ovÃ½ch bodech sÃ­tÄ› s rozmÄ›ry dle argumentu `-g`. Velikost vÃ½stupnÃ­ sÃ­tÄ› je danÃ© dle bodÅ¯ s minimÃ¡lnÃ­mi resp. maximÃ¡lnÃ­mi souÅ™adnicemi. InterpolaÄnÃ­ metoda lze ovlivnit argumentem exponentu `-p`. V pÅ™Ã­padÄ› zadÃ¡nÃ­ nekorektnÃ­ch vstupÅ¯ program vypÃ­Å¡e popis chyby a skonÄÃ­ s chybou.
 
 ### Vstup
 
-Program nejdøíve vezme parametr `-p <cislo>`, které pouije jako exponent 
-ve váhové funkci, nebo `-g <sirka>x<vyska>`, které udává poèet øádkù a sloupcù vıstupní møíky. Vstupní i vıstupní soubor je ve formátu CSV a obsahuje desetinná èísla (s desetinnou 
-teèkou) oddìlená èárkami. Vstupní soubor obsahuje na prvním øádku poèet øádkù
- namìøenıch dat a další øádky vdy obsahují x-ovou souøadnici, y-ovou souøadnici
-a namìøenou hodnotu na tìchto souøadnicích.
+Program nejdÅ™Ã­ve vezme parametr `-p <cislo>`, kterÃ© pouÅ¾ije jako exponent ve vÃ¡hovÃ© funkci, nebo `-g <sirka>x<vyska>`, kterÃ© udÃ¡vÃ¡ poÄet Å™Ã¡dkÅ¯ a sloupcÅ¯ vÃ½stupnÃ­ mÅ™Ã­Å¾ky. VstupnÃ­ i vÃ½stupnÃ­ soubor je ve formÃ¡tu CSV a obsahuje desetinnÃ¡ ÄÃ­sla (s desetinnou teÄkou) oddÄ›lenÃ¡ ÄÃ¡rkami. VstupnÃ­ soubor obsahuje na prvnÃ­m Å™Ã¡dku poÄet Å™Ã¡dkÅ¯ namÄ›Å™enÃ½ch dat a dalÅ¡Ã­ Å™Ã¡dky vÅ¾dy obsahujÃ­ x-ovou souÅ™adnici, y-ovou souÅ™adnici a namÄ›Å™enou hodnotu na tÄ›chto souÅ™adnicÃ­ch.
 
-### Vıstup
+### VÃ½stup
 
-Vıstupní soubor obsahuje definovanı poèet øádkù a sloupcù, které pøedstavují 
-interpolované hodnoty v møíovıch bodech. Hodnoty jsou zaokrouhlené na dvì desetinná místa.
+VÃ½stupnÃ­ soubor obsahuje definovanÃ½ poÄet Å™Ã¡dkÅ¯ a sloupcÅ¯, kterÃ© pÅ™edstavujÃ­ interpolovanÃ© hodnoty v mÅ™Ã­Å¾ovÃ½ch bodech. Hodnoty jsou zaokrouhlenÃ© na dvÄ› desetinnÃ¡ mÃ­sta.
 
 
 ### Funkce
 
-`IDW1p` - **Interpolaèní metoda IDW v 1 bodu**
-- Interpoluje hodnotu bodu se souøadnicemi *[x, y]* na základì mnoiny vstupních bodù se souøadnicemi *[xd, yd]* a hodnotou *zd*. Exponent *al* urèuje charakter vısledného "povrchu". Více informací o metodì: https://en.wikipedia.org/wiki/Inverse_distance_weighting
+`IDW1p` - **InterpolaÄnÃ­ metoda IDW v 1 bodu**
+- Interpoluje hodnotu bodu se souÅ™adnicemi *[x, y]* na zÃ¡kladÄ› mnoÅ¾iny vstupnÃ­ch bodÅ¯ se souÅ™adnicemi *[xd, yd]* a hodnotou *zd*. Exponent *al* urÄuje charakter vÃ½slednÃ©ho "povrchu". VÃ­ce informacÃ­ o metodÄ›: https://en.wikipedia.org/wiki/Inverse_distance_weighting
 - **parametry**: pole *xd*, pole *yd*, pole *zd*, *x*, *y*, *al*
-- **vystup**: interpolovaná hodnota *zi*
+- **vÃ½stup**: interpolovanÃ¡ hodnota *zi*
 
-`getMax` - **Vrátí maximum**
-- Vrátí maximální hodnotu pole.
+`getMax` - **VrÃ¡tÃ­ maximum**
+- VrÃ¡tÃ­ maximÃ¡lnÃ­ hodnotu pole.
 - **parametry**: pole *input*
-- **vystup**: maximální hodnota *max*
+- **vÃ½stup**: maximÃ¡lnÃ­ hodnota *max*
 
-`getMin` - **Vrátí minimum**
-- Vrátí minimální hodnotu pole.
+`getMin` - **VrÃ¡tÃ­ minimum**
+- VrÃ¡tÃ­ minimÃ¡lnÃ­ hodnotu pole.
 - **parametry**: pole *input*
-- **vystup**: minimální hodnota *min*
+- **vÃ½stup**: minimÃ¡lnÃ­ hodnota *min*
 
-`getGrid` - **Definice møíe**
-- Vrátí pole souøadnic ve smìru jedné ze souøadnicovıch os na základì pøíslušného rozmìru møíe dané parametrem *res* a extrémních hodnot vstupního pole *arr*.
+`getGrid` - **Definice mÅ™Ã­Å¾e**
+- VrÃ¡tÃ­ pole souÅ™adnic ve smÄ›ru jednÃ© ze souÅ™adnicovÃ½ch os na zÃ¡kladÄ› pÅ™Ã­sluÅ¡nÃ©ho rozmÄ›ru mÅ™Ã­Å¾e danÃ© parametrem *res* a extrÃ©mnÃ­ch hodnot vstupnÃ­ho pole *arr*.
 - **parametry**: pole *arr*, *res*
-- **vystup**: souøadnice bunìk jedné strany møíe *grid*
+- **vÃ½stup**: souÅ™adnice bunÄ›k jednÃ© strany mÅ™Ã­Å¾e *grid*
 
-`loadData` - **Naète data**
-- Naète data ze souboru s cestou danou parametrem *text* a zapíše jednotlivé øádky do textového pole *stringArr*, které vrátí.
-- **parametry**: øetìzec *text*
-- **vystup**: textové pole s prvky dle øádku textového souboru *stringArr*
+`loadData` - **NaÄte data**
+- NaÄte data ze souboru s cestou danou parametrem *text* a zapÃ­Å¡e jednotlivÃ© Å™Ã¡dky do textovÃ©ho pole *stringArr*, kterÃ© vrÃ¡tÃ­.
+- **parametry**: Å™etÄ›zec *text*
+- **vÃ½stup**: textovÃ© pole s prvky dle Å™Ã¡dku textovÃ©ho souboru *stringArr*
 
-`writeData` - **Zapíše data**
-- Provede interpolaci v buòkách møíky definované vstupními poli *xx* a *yy* (s délkou *resX* a *resY*) dle funkce `IDW1p` a zapíše interpolované hodnoty do souboru s cestou danou parametrem *text*
-- **parametry**: øetìzec *text*, pole *xd*, pole *yd*, pole *zd*, pole *xx*, pole *yy*, *alfa*, *resX*, *resY*
+`writeData` - **ZapÃ­Å¡e data**
+- Provede interpolaci v buÅˆkÃ¡ch mÅ™Ã­Å¾ky definovanÃ© vstupnÃ­mi poli *xx* a *yy* (s dÃ©lkou *resX* a *resY*) dle funkce `IDW1p` a zapÃ­Å¡e interpolovanÃ© hodnoty do souboru s cestou danou parametrem *text*
+- **parametry**: Å™etÄ›zec *text*, pole *xd*, pole *yd*, pole *zd*, pole *xx*, pole *yy*, *alfa*, *resX*, *resY*
