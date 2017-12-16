@@ -39,31 +39,30 @@ public class Du2 {
                 String [] XxY = args[3].split("x");
                 resX = Integer.parseInt(XxY[0]);
                 resY = Integer.parseInt(XxY[1]);
-            }
-            else if (args[0].equals("-g") && args[2].equals("-p")){
+            } else if (args[0].equals("-g") && args[2].equals("-p")){
                 alfa = Double.parseDouble(args[3]);
                 String [] XxY = args[1].split("x");
                 resX = Integer.parseInt(XxY[0]);
                 resY = Integer.parseInt(XxY[1]);
-            }
-            else if (args[0].equals("-g") || args[0].equals("-p")){
+            } else if (args[0].equals("-g") || args[0].equals("-p")){
                 fileArg = 2;
                 if (args[0].equals("-g")){
                     String [] XxY = args[1].split("x");
                     resX = Integer.parseInt(XxY[0]);
                     resY = Integer.parseInt(XxY[1]);
-                }
-                else{
+                } else{
                     alfa = Double.parseDouble(args[1]);
                 }
-            }
-            else{
+            } else{
                 fileArg = 0;
             }
         } catch(NumberFormatException ex){
             System.err.print("Incorrect format of argument");
             System.exit(1);
-        } 
+        } catch(ArrayIndexOutOfBoundsException ex){
+            System.err.print("No arguments given");
+            System.exit(1);
+        }
         
         // nacteni vstupniho souboru do pole s prvky poli dle souradnice/hodnoty
         double [][]arrOfArr = {};
@@ -107,41 +106,19 @@ public class Du2 {
         int nd = xd.length; // delka vstupnich poli
         double r; // vzdalenost
         double lamSum = 0; // suma vah
-        double zi = 0; // vysledna interpolovana hodnota
-//        double []lam = new double[nd]; // pole vah
-//        
-//        for (int i = 0; i < nd; i++){
-//            r = Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2)); // vypocet vzdalenosti
-//            if (r == 0){
-//                return zd[i]; // hledana hodnota je v jednom ze vstupnich bodu
-//            }
-//            else{
-//                lam[i] = 1/Math.pow(r,al); // vypocet vah
-//                lamSum += lam[i];
-//            }
-//        }
-//    
-//        // vazeni hodnot a vypocet vysledne hodnoty
-//        for (int i = 0; i < nd; i++){
-//            zi += zd[i]*(lam[i]/lamSum);
-//        }
-//        return zi;
+        double ziSum = 0; // suma vazenych vzdalenosti
+        
+        // vypocet sumy vah
         for (int i = 0; i < nd; i++){
             r = Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2)); // vypocet vzdalenosti
             if (r == 0){
                 return zd[i]; // hledana hodnota je v jednom ze vstupnich bodu
-            }
-            else{
-                lamSum += 1/Math.pow(r,al);
+            } else{
+                lamSum += 1/Math.pow(r,al); // nacitani sumy vah
+                ziSum += zd[i]*((1/Math.pow(r,al))); // nacitani sumy vazenych vzdalenosti
             }
         }
-        
-        // vazeni hodnot a vypocet vysledne hodnoty
-        for (int i = 0; i < nd; i++){
-            r = Math.sqrt(Math.pow(x-xd[i],2)+Math.pow(y-yd[i],2));
-            zi += zd[i]*((1/Math.pow(r,al))/lamSum);
-        }
-        return zi;
+        return ziSum/lamSum;
     }
     /** 
      * Vrati Maximum.
@@ -190,8 +167,7 @@ public class Du2 {
         grid[0] = getMin(arr);
         for(int i = 1; i < res; i++){
             if(i == 0){
-            }
-            else{
+            } else{
                 grid[i] = grid[0]+((i*1.0/res)*diff);
             }
         }
@@ -225,10 +201,10 @@ public class Du2 {
             System.err.format("File %s not found",text);
             System.exit(1);
         } catch (IOException ex) {
-            System.err.print("Error while reading a line");
+            System.err.print("Error while reading a line in input file");
             System.exit(1);
         } catch (NumberFormatException ex){
-            System.err.print("First line must state number of following lines");
+            System.err.print("First line in input file must state number of following lines");
             System.exit(1);
         }
         
