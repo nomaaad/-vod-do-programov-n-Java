@@ -31,10 +31,20 @@ public class Du2 {
         int resY = 100; // rozliseni ve smeru y
         double alfa = 2; // exponent
         int fileArg = 4; // index argumentu vstupnich dat
+        int pArg = args.length; // pocet argumentu
         
         // nacteni argumentu
         try{
-            if (args[0].equals("-p") && args[2].equals("-g")){
+            if (pArg == 2){
+                fileArg = 0;
+                if (args[0].charAt(0) == '-' || args[1].charAt(0) == '-'){
+                    System.err.print("Input and output csv files must be given.");
+                    System.exit(1);
+                }
+            } else if (pArg < 2){
+                System.err.print("Input and output csv files must be given.");
+                System.exit(1);
+            } else if (args[0].equals("-p") && args[2].equals("-g")){
                 alfa = Double.parseDouble(args[1]);
                 String [] XxY = args[3].split("x");
                 resX = Integer.parseInt(XxY[0]);
@@ -44,7 +54,7 @@ public class Du2 {
                 String [] XxY = args[1].split("x");
                 resX = Integer.parseInt(XxY[0]);
                 resY = Integer.parseInt(XxY[1]);
-            } else if (args[0].equals("-g") || args[0].equals("-p")){
+            } else{
                 fileArg = 2;
                 if (args[0].equals("-g")){
                     String [] XxY = args[1].split("x");
@@ -53,14 +63,12 @@ public class Du2 {
                 } else{
                     alfa = Double.parseDouble(args[1]);
                 }
-            } else{
-                fileArg = 0;
             }
         } catch(NumberFormatException ex){
             System.err.print("Incorrect format of argument");
             System.exit(1);
         } catch(ArrayIndexOutOfBoundsException ex){
-            System.err.print("No arguments given");
+            System.err.print("False arguments");
             System.exit(1);
         }
         
@@ -219,6 +227,10 @@ public class Du2 {
                 String [] items;
                 String line = stringArr[j];
                 items = line.split(",");
+                if(items.length != 3){
+                    System.err.format("False number of values on line %d in input file.", j+1);
+                    System.exit(1);
+                }
                 xd[j-1] = (Double.parseDouble(items[0]));
                 yd[j-1] = (Double.parseDouble(items[1]));
                 zd[j-1] = (Double.parseDouble(items[2]));
