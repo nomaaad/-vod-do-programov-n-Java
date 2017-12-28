@@ -20,6 +20,7 @@ public class Modus {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        // input array
         int []arr = {1000,-1,0,1,1,2,2,3,5,3,1,4,3,6,4,4,6,7,12,3,5,6,4,7,8,5,9,5,4,2,3,1,6,42,7,9};
         
         // create dictionary with digits as keys and their count as values
